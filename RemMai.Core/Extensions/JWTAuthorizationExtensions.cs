@@ -41,7 +41,10 @@ public static class JWTAuthorizationExtensions
             authenticationConfigure?.Invoke(options);
         }).AddJwtBearer(options =>
         {
-            var jwtSetting = RemMaiApp.Configuration.GetValue<JwtSetting>("JwtSetting");
+
+            var jwtSetting = new JwtSetting();
+            RemMaiApp.Configuration.Bind("JwtSetting", jwtSetting);
+
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 // 签名密钥

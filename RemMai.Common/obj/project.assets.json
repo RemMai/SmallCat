@@ -8,19 +8,24 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\RemMai.Center\\RemMai.Common\\RemMai.Common.csproj",
+      "projectUniqueName": "D:\\Apps\\RemMai.Center\\RemMai.Common\\RemMai.Common.csproj",
       "projectName": "RemMai.Common",
-      "projectPath": "F:\\RemMai.Center\\RemMai.Common\\RemMai.Common.csproj",
+      "projectPath": "D:\\Apps\\RemMai.Center\\RemMai.Common\\RemMai.Common.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "F:\\RemMai.Center\\RemMai.Common\\obj\\",
+      "outputPath": "D:\\Apps\\RemMai.Center\\RemMai.Common\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

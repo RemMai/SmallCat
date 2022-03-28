@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
@@ -13,54 +15,27 @@ namespace RemMai.Extensions;
 
 public static class GlobalObjectInjectExtensions
 {
-    public static WebApplicationBuilder GlobalObjectInject(this WebApplicationBuilder builder, bool autoScan = true)
+    public static WebApplicationBuilder InitApp(this WebApplicationBuilder appBuilder)
     {
-        if (RemMaiApp.ConfigurationManager == null)
-        {
-            RemMaiApp.ConfigurationManager = builder.Configuration;
-        }
-        builder.AutoScanConfigurationFile();
-        return builder;
-    }
-    /// <summary>
-    /// 扫描Json配置文件
-    /// </summary>
-    /// <param name="builder"></param>
-    /// <returns></returns>
-    private static WebApplicationBuilder AutoScanConfigurationFile(this WebApplicationBuilder builder)
-    {
-        var path = AppDomain.CurrentDomain.BaseDirectory;
 
-        // 过滤的Json文件
-        List<string> filterJsonName = new List<string>()
-        {
-            "appsettings.Development.json",
-            "appsettings.json",
-            ".deps.json",
-            ".runtimeconfig.json",
-        };
-        List<string> jsonfiles = Directory.GetFiles(path, "*.json").Where(fileName =>
-        {
-            bool result = false;
+        // 注册Configuration
+        RemMaiApp.ConfigurationManager = appBuilder.Configuration;
 
-            foreach (string filterName in filterJsonName)
-            {
-                result = Path.GetFileName(fileName).ToLower().Contains(filterName.ToLower());
-                if (result)
-                {
-                    break;
-                }
-            }
-            return !result;
-        }).ToList();
+        // 注册Environment
+        RemMaiApp.Environment = appBuilder.Environment;
 
-        string environmentName = builder.Environment.EnvironmentName;
+        // 注册服务集合
+        RemMaiApp.Services = appBuilder.Services;
 
-        foreach (string jsonfile in jsonfiles)
-        {
-            RemMaiApp.ConfigurationManager.AddJsonFile(jsonfile, optional: true, reloadOnChange: true);
-        }
+        // 注册服务提供器
+        RemMaiApp.ServiceProvider = appBuilder.Services.BuildServiceProvider(false);
 
-        return builder;
+        // 注册全局请求上下文
+        appBuilder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        RemMaiApp.HttpContext = appBuilder.Services.BuildServiceProvider(false).GetService<IHttpContextAccessor>().HttpContext;
+
+        appBuilder.AutoScanConfigurationFile();
+
+        return appBuilder;
     }
 }

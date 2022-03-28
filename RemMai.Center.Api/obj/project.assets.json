@@ -430,6 +430,7 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "FreeSql.Provider.Sqlite": "3.2.100",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.3",
           "Microsoft.Extensions.DependencyModel": "6.0.0",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "6.0.0",
           "Panda.DynamicWebApi": "1.0.0",
@@ -1238,19 +1239,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\RemMai.Center\\RemMai.Center.Api\\RemMai.Center.Api.csproj",
+      "projectUniqueName": "D:\\Apps\\RemMai.Center\\RemMai.Center.Api\\RemMai.Center.Api.csproj",
       "projectName": "RemMai.Center.Api",
-      "projectPath": "F:\\RemMai.Center\\RemMai.Center.Api\\RemMai.Center.Api.csproj",
+      "projectPath": "D:\\Apps\\RemMai.Center\\RemMai.Center.Api\\RemMai.Center.Api.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "F:\\RemMai.Center\\RemMai.Center.Api\\obj\\",
+      "outputPath": "D:\\Apps\\RemMai.Center\\RemMai.Center.Api\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1264,8 +1270,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "F:\\RemMai.Center\\RemMai.Core\\RemMai.Core.csproj": {
-              "projectPath": "F:\\RemMai.Center\\RemMai.Core\\RemMai.Core.csproj"
+            "D:\\Apps\\RemMai.Center\\RemMai.Core\\RemMai.Core.csproj": {
+              "projectPath": "D:\\Apps\\RemMai.Center\\RemMai.Core\\RemMai.Core.csproj"
             }
           }
         }
@@ -1306,13 +1312,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "读取缓存文件 F:\\RemMai.Center\\RemMai.Center.Api\\obj\\project.nuget.cache 时遇到问题: Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }

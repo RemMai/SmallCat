@@ -46,15 +46,3 @@ D:\Apps\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\Panda.DynamicWebApi.d
 D:\Apps\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\refint\Panda.DynamicWebApi.dll
 D:\Apps\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\Panda.DynamicWebApi.pdb
 D:\Apps\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\ref\Panda.DynamicWebApi.dll
-F:\RemMai.Center\Panda.DynamicWebApi\bin\Debug\net6.0\Panda.DynamicWebApi.deps.json
-F:\RemMai.Center\Panda.DynamicWebApi\bin\Debug\net6.0\Panda.DynamicWebApi.dll
-F:\RemMai.Center\Panda.DynamicWebApi\bin\Debug\net6.0\Panda.DynamicWebApi.pdb
-F:\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\Panda.DynamicWebApi.csproj.AssemblyReference.cache
-F:\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\Panda.DynamicWebApi.GeneratedMSBuildEditorConfig.editorconfig
-F:\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\Panda.DynamicWebApi.AssemblyInfoInputs.cache
-F:\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\Panda.DynamicWebApi.AssemblyInfo.cs
-F:\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\Panda.DynamicWebApi.csproj.CoreCompileInputs.cache
-F:\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\Panda.DynamicWebApi.dll
-F:\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\refint\Panda.DynamicWebApi.dll
-F:\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\Panda.DynamicWebApi.pdb
-F:\RemMai.Center\Panda.DynamicWebApi\obj\Debug\net6.0\ref\Panda.DynamicWebApi.dll

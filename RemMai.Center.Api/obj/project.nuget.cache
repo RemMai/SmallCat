@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "P4Wxgp9IPQYz5NhYxjZTR3Q9POVsB+JT5YQQZh6anHlktJgXsOITLPTQZvbl+bl5zT5PzRzFaD3wFJrOVtzy/A==",
+  "dgSpecHash": "F2QmFsqxMmmLMv6jH8s0UceeLz7hTAulS74sCspsjqwVlV6K5XC8tmoj8GUmCfMfMBY6ujMyW0kgcN9BKL0tuQ==",
   "success": true,
-  "projectFilePath": "F:\\RemMai.Center\\RemMai.Center.Api\\RemMai.Center.Api.csproj",
+  "projectFilePath": "D:\\Apps\\RemMai.Center\\RemMai.Center.Api\\RemMai.Center.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\freesql\\3.2.100\\freesql.3.2.100.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\freesql.provider.sqlite\\3.2.100\\freesql.provider.sqlite.3.2.100.nupkg.sha512",
@@ -36,12 +36,5 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "读取缓存文件 F:\\RemMai.Center\\RemMai.Center.Api\\obj\\project.nuget.cache 时遇到问题: Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }

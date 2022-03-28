@@ -7,6 +7,6 @@ public class JwtHandler : AuthorizationHandler
 {
     public override Task<bool> IsAuth(AuthorizationHandlerContext context)
     {
-
+        return Task.FromResult(true);
     }
 }

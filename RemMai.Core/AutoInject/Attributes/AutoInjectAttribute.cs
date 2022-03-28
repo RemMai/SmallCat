@@ -1,4 +1,5 @@
-﻿using RemMai.Inject;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RemMai.Inject;
 
 namespace RemMai.Inject;
 
@@ -12,13 +13,17 @@ public class AutoInjectAttribute : Attribute
     public AutoInjectAttribute(Type interfaceType)
     {
         Type = interfaceType;
-        InjectType = InjectType.Scope;
     }
 
-    public AutoInjectAttribute(Type interfaceType, InjectType injectType)
+    public AutoInjectAttribute(Type interfaceType, ServiceLifetime serviceLifetime)
     {
         Type = interfaceType;
-        InjectType = injectType;
+        InjectType = serviceLifetime switch
+        {
+            ServiceLifetime.Transient => typeof(ITransient),
+            ServiceLifetime.Singleton => typeof(ISingleton),
+            _ => typeof(IScoped),
+        };
     }
 
     public Type Type { get; set; }
@@ -26,6 +31,9 @@ public class AutoInjectAttribute : Attribute
     /// <summary>
     /// 注入类型
     /// </summary>
-    public InjectType InjectType { get; set; }
+    public Type InjectType { get; set; } = typeof(IScoped);
+
+
+    public string InjectName { get => InjectType.Name; }
 }
 
