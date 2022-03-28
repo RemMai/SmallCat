@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
 using RemMai.Inject;
 namespace RemMai.Extensions;
 
@@ -7,6 +8,7 @@ public static class AutoInjectExtensions
 {
     public static IServiceCollection AutoInjectByAttribute(this IServiceCollection services)
     {
+
         var path = AppDomain.CurrentDomain.BaseDirectory;
         var assemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToList();
         foreach (var assembly in assemblies)
@@ -76,6 +78,19 @@ public static class AutoInjectExtensions
 
     public static IServiceCollection AutoInject(this IServiceCollection services)
     {
+        var deps = DependencyContext.Default;
+
+        //var assemblies = deps.CompileLibraries.Where(e => e.Type == "project").Select(e => e.Path).Select(Assembly.LoadFrom).ToList();
+
+        Assembly.Load()
+
+
+        deps.CompileLibraries.Where(e => e.Type == "project").ToList().ForEach(e =>
+        {
+            e.GetType().GetProperties().Where(t => t.GetValue(e) != null).ToList().ForEach(t => { Console.Write(t.GetValue(e).ToString() + "\t"); });
+        });
+
+
         var path = AppDomain.CurrentDomain.BaseDirectory;
         var assemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToList();
 

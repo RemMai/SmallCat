@@ -10,3 +10,15 @@ D:\Apps\RemMai.Center\RemMai.Common\obj\Debug\net6.0\RemMai.Common.dll
 D:\Apps\RemMai.Center\RemMai.Common\obj\Debug\net6.0\refint\RemMai.Common.dll
 D:\Apps\RemMai.Center\RemMai.Common\obj\Debug\net6.0\RemMai.Common.pdb
 D:\Apps\RemMai.Center\RemMai.Common\obj\Debug\net6.0\ref\RemMai.Common.dll
+F:\RemMai.Center\RemMai.Common\bin\Debug\net6.0\RemMai.Common.deps.json
+F:\RemMai.Center\RemMai.Common\bin\Debug\net6.0\RemMai.Common.dll
+F:\RemMai.Center\RemMai.Common\bin\Debug\net6.0\RemMai.Common.pdb
+F:\RemMai.Center\RemMai.Common\obj\Debug\net6.0\RemMai.Common.csproj.AssemblyReference.cache
+F:\RemMai.Center\RemMai.Common\obj\Debug\net6.0\RemMai.Common.GeneratedMSBuildEditorConfig.editorconfig
+F:\RemMai.Center\RemMai.Common\obj\Debug\net6.0\RemMai.Common.AssemblyInfoInputs.cache
+F:\RemMai.Center\RemMai.Common\obj\Debug\net6.0\RemMai.Common.AssemblyInfo.cs
+F:\RemMai.Center\RemMai.Common\obj\Debug\net6.0\RemMai.Common.csproj.CoreCompileInputs.cache
+F:\RemMai.Center\RemMai.Common\obj\Debug\net6.0\RemMai.Common.dll
+F:\RemMai.Center\RemMai.Common\obj\Debug\net6.0\refint\RemMai.Common.dll
+F:\RemMai.Center\RemMai.Common\obj\Debug\net6.0\RemMai.Common.pdb
+F:\RemMai.Center\RemMai.Common\obj\Debug\net6.0\ref\RemMai.Common.dll
