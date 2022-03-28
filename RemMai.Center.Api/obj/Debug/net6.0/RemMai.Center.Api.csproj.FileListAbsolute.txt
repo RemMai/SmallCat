@@ -38,6 +38,7 @@ D:\Apps\RemMai.Center\RemMai.Center.Api\obj\Debug\net6.0\refint\RemMai.Center.Ap
 D:\Apps\RemMai.Center\RemMai.Center.Api\obj\Debug\net6.0\RemMai.Center.Api.pdb
 D:\Apps\RemMai.Center\RemMai.Center.Api\obj\Debug\net6.0\RemMai.Center.Api.genruntimeconfig.cache
 D:\Apps\RemMai.Center\RemMai.Center.Api\obj\Debug\net6.0\ref\RemMai.Center.Api.dll
+<<<<<<< HEAD
 D:\Apps\RemMai.Center\RemMai.Center.Api\bin\Debug\net6.0\myconfig.json
 F:\RemMai.Center\RemMai.Center.Api\bin\Debug\net6.0\appsettings.Development.json
 F:\RemMai.Center\RemMai.Center.Api\bin\Debug\net6.0\appsettings.json
@@ -81,3 +82,8 @@ F:\RemMai.Center\RemMai.Center.Api\obj\Debug\net6.0\RemMai.Center.Api.pdb
 F:\RemMai.Center\RemMai.Center.Api\obj\Debug\net6.0\RemMai.Center.Api.genruntimeconfig.cache
 F:\RemMai.Center\RemMai.Center.Api\obj\Debug\net6.0\ref\RemMai.Center.Api.dll
 F:\RemMai.Center\RemMai.Center.Api\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+=======
+D:\Apps\RemMai.Center\RemMai.Center.Api\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+D:\Apps\RemMai.Center\RemMai.Center.Api\bin\Debug\net6.0\json1.json
+D:\Apps\RemMai.Center\RemMai.Center.Api\bin\Debug\net6.0\json2.json
+>>>>>>> origin/master

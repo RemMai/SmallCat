@@ -6,12 +6,22 @@ namespace RemMai.Extensions;
 
 public static class AutoInjectExtensions
 {
+    /// <summary>
+    /// 仅仅根据属性注册服务生命周期
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static IServiceCollection AutoInjectByAttribute(this IServiceCollection services)
     {
+<<<<<<< HEAD
 
         var path = AppDomain.CurrentDomain.BaseDirectory;
         var assemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToList();
         foreach (var assembly in assemblies)
+=======
+        foreach (var assembly in RemMaiApp.ProjectAssemblies)
+>>>>>>> origin/master
         {
             var types = assembly.GetTypes().Where(a => a.GetCustomAttribute<AutoInjectAttribute>() != null).ToList();
             if (types.Count <= 0) continue;
@@ -38,19 +48,30 @@ public static class AutoInjectExtensions
         return services;
     }
 
+    /// <summary>
+    /// 仅仅根据接口注册生命周期
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static IServiceCollection AutoInjectByInterface(this IServiceCollection services)
     {
-        var path = AppDomain.CurrentDomain.BaseDirectory;
-        var assemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToList();
+        List<Type> lifeTypes = new() { typeof(IScoped), typeof(ISingleton), typeof(ITransient) };
 
-        var scope = nameof(IScope);
-        var single = nameof(ISingleton);
-        var transient = nameof(ITransient);
+        List<Type> allTypes = RemMaiApp.ProjectAssemblies.SelectMany(e =>
+            e.GetTypes().Where(g => g.IsPublic && (g.IsDefined(typeof(AutoInjectAttribute)) || g.GetInterfaces().Intersect(lifeTypes).Any()))
 
-        foreach (var assembly in assemblies)
+        ).ToList();
+
+        foreach (var assembly in RemMaiApp.ProjectAssemblies)
         {
             foreach (var type in assembly.GetTypes())
             {
+
+
+
+
+
                 var injectType = type.GetInterface(scope) ?? type.GetInterface(single) ?? type.GetInterface(transient);
                 if (injectType == null) continue;
                 var interfaceType = type.GetInterface($"I{type.Name}");
@@ -76,8 +97,14 @@ public static class AutoInjectExtensions
         return services;
     }
 
+    /// <summary>
+    /// 根据属性或接口注册生命周期
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceCollection AutoInject(this IServiceCollection services)
     {
+<<<<<<< HEAD
         var deps = DependencyContext.Default;
 
         //var assemblies = deps.CompileLibraries.Where(e => e.Type == "project").Select(e => e.Path).Select(Assembly.LoadFrom).ToList();
@@ -95,10 +122,13 @@ public static class AutoInjectExtensions
         var assemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToList();
 
         var scope = nameof(IScope);
+=======
+        var scope = nameof(IScoped);
+>>>>>>> origin/master
         var single = nameof(ISingleton);
         var transient = nameof(ITransient);
 
-        var bigTypes = assemblies.Select(e => e.GetTypes().Where(t => t.GetCustomAttribute<AutoInjectAttribute>() != null || (t.GetInterface(scope) ?? t.GetInterface(single) ?? t.GetInterface(transient)) != null)).ToList();
+        var bigTypes = RemMaiApp.ProjectAssemblies.Select(e => e.GetTypes().Where(t => t.GetCustomAttribute<AutoInjectAttribute>() != null || (t.GetInterface(scope) ?? t.GetInterface(single) ?? t.GetInterface(transient)) != null)).ToList();
 
         bigTypes.ForEach(types =>
         {
@@ -115,7 +145,17 @@ public static class AutoInjectExtensions
                 else
                 {
                     var _interface = type.GetInterface(scope) ?? type.GetInterface(single) ?? type.GetInterface(transient);
-                    interfaceType = type.GetInterface($"I{type.Name}");
+
+
+                    // 排除无关的接口
+
+                    var interfaceTypes = type.GetInterfaces().Where(e =>
+                        e != typeof(Panda.DynamicWebApi.IDynamicWebApi) // 排除动态API接口
+                        e
+                    )
+
+
+                    interfaceType = .LastOrDefault();
                     injectName = _interface.Name.ToLower();
                 }
                 if (interfaceType == null) continue;

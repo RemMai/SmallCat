@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +22,11 @@ public static class GlobalObjectInjectExtensions
         builder.AutoScanConfigurationFile();
         return builder;
     }
-
+    /// <summary>
+    /// 扫描Json配置文件
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     private static WebApplicationBuilder AutoScanConfigurationFile(this WebApplicationBuilder builder)
     {
         var path = AppDomain.CurrentDomain.BaseDirectory;
@@ -33,7 +39,7 @@ public static class GlobalObjectInjectExtensions
             ".deps.json",
             ".runtimeconfig.json",
         };
-        List<string> jsonfiles = Directory.GetFiles(path, "*.json").ToList().Where(fileName =>
+        List<string> jsonfiles = Directory.GetFiles(path, "*.json").Where(fileName =>
         {
             bool result = false;
 
