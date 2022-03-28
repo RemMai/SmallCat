@@ -8,19 +8,24 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\RemMai.Center\\Panda.DynamicWebApi\\Panda.DynamicWebApi.csproj",
+      "projectUniqueName": "D:\\Apps\\RemMai.Center\\Panda.DynamicWebApi\\Panda.DynamicWebApi.csproj",
       "projectName": "Panda.DynamicWebApi",
-      "projectPath": "F:\\RemMai.Center\\Panda.DynamicWebApi\\Panda.DynamicWebApi.csproj",
+      "projectPath": "D:\\Apps\\RemMai.Center\\Panda.DynamicWebApi\\Panda.DynamicWebApi.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "F:\\RemMai.Center\\Panda.DynamicWebApi\\obj\\",
+      "outputPath": "D:\\Apps\\RemMai.Center\\Panda.DynamicWebApi\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -7,17 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="myconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="myconfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.100" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>

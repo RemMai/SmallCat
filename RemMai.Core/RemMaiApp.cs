@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,24 +11,9 @@ namespace RemMai;
 public static class RemMaiApp
 {
     public static ConfigurationManager ConfigurationManager { get; set; }
-    public static IConfiguration Configuration
-    {
-        get { return ConfigurationManager; }
-    }
-
-
-    private static string _executeDirectory { get; set; }
-    public static string ExecuteDirectory
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(_executeDirectory))
-            {
-                _executeDirectory = AppContext.BaseDirectory;
-            }
-            return _executeDirectory;
-        }
-    }
+    public static IConfiguration Configuration { get => ConfigurationManager; }
+    public static string ExecuteDirectory { get; } = AppContext.BaseDirectory;
+    public static List<Assembly> ProjectAssemblies { get; } = Init.GetProjectAssemblies();
 
     public static bool ReLoadConfiguration()
     {

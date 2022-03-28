@@ -15,4 +15,5 @@ D:\Apps\RemMai.Center\RemMai.Core\obj\Debug\net6.0\RemMai.Core.dll
 D:\Apps\RemMai.Center\RemMai.Core\obj\Debug\net6.0\refint\RemMai.Core.dll
 D:\Apps\RemMai.Center\RemMai.Core\obj\Debug\net6.0\RemMai.Core.pdb
 D:\Apps\RemMai.Center\RemMai.Core\obj\Debug\net6.0\ref\RemMai.Core.dll
-D:\Apps\RemMai.Center\RemMai.Core\bin\Debug\net6.0\myconfig.json
+D:\Apps\RemMai.Center\RemMai.Core\bin\Debug\net6.0\json1.json
+D:\Apps\RemMai.Center\RemMai.Core\bin\Debug\net6.0\json2.json

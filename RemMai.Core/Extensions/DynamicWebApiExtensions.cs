@@ -40,16 +40,7 @@ public static class DynamicWebApiExtensions
         // 注册PandaDynamicWebApi
         services.AddDynamicWebApi(options =>
         {
-            var assemblies = new List<Assembly>();
-            DirectoryInfo directoryInfo = new(AppContext.BaseDirectory);
-            var projectAssembilyNames = directoryInfo.GetFiles("*.xml").Select(e => e.Name.Remove(e.Name.Length - 4, 4)).ToList();
-            AppDomain.CurrentDomain.GetAssemblies().ToList().Where(e => projectAssembilyNames.Contains(e.GetName().Name ?? "")).ToList()
-            .ForEach(assembly =>
-            {
-                assemblies.Add(assembly);
-            });
-
-            assemblies.ForEach(assembly =>
+            RemMaiApp.ProjectAssemblies.ForEach(assembly =>
             {
                 options.AssemblyDynamicWebApiOptions.Add(assembly, new AssemblyDynamicWebApiOptions());
             });
