@@ -2,6 +2,7 @@
 using Panda.DynamicWebApi.Helpers;
 using System;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Panda.DynamicWebApi;
 public interface ISelectController
@@ -15,8 +16,7 @@ internal class DefaultSelectController : ISelectController
     {
         var typeInfo = type.GetTypeInfo();
 
-        if (!typeof(IDynamicWebApi).IsAssignableFrom(type) ||
-            !typeInfo.IsPublic || typeInfo.IsAbstract || typeInfo.IsGenericType)
+        if (!typeInfo.IsPublic || typeInfo.IsAbstract || typeInfo.IsGenericType)
         {
             return false;
         }
@@ -29,7 +29,7 @@ internal class DefaultSelectController : ISelectController
             return false;
         }
 
-        if (ReflectionHelper.GetSingleAttributeOrDefaultByFullSearch<NonDynamicWebApiAttribute>(typeInfo) != null)
+        if (ReflectionHelper.GetSingleAttributeOrDefaultByFullSearch<NonControllerAttribute>(typeInfo) != null)
         {
             return false;
         }

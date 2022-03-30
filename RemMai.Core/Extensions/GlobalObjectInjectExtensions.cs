@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +18,6 @@ public static class GlobalObjectInjectExtensions
 {
     public static WebApplicationBuilder InitApp(this WebApplicationBuilder appBuilder)
     {
-
         // 注册Configuration
         RemMaiApp.ConfigurationManager = appBuilder.Configuration;
 
@@ -32,10 +32,22 @@ public static class GlobalObjectInjectExtensions
 
         // 注册全局请求上下文
         appBuilder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
         RemMaiApp.HttpContext = appBuilder.Services.BuildServiceProvider(false).GetService<IHttpContextAccessor>().HttpContext;
 
-        appBuilder.AutoScanConfigurationFile();
 
+
+        appBuilder.AutoScanConfigurationFile();
+        appBuilder.Services.AddControllers();
+        appBuilder.Services.AddDynamicWebApi();
+        appBuilder.Services.AutoInject();
+
+        return appBuilder;
+    }
+    public static WebApplicationBuilder InitApp<THandler>(this WebApplicationBuilder appBuilder) where THandler : class, IAuthorizationHandler
+    {
+        appBuilder.InitApp();
+        appBuilder.Services.AddJwtAuthorization<THandler>();
         return appBuilder;
     }
 }

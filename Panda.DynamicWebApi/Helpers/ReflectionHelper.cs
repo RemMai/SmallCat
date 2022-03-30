@@ -6,7 +6,6 @@ using System.Reflection;
 namespace Panda.DynamicWebApi.Helpers;
 internal static class ReflectionHelper
 {
-
     public static TAttribute GetSingleAttributeOrDefaultByFullSearch<TAttribute>(TypeInfo info)
         where TAttribute : Attribute
     {
@@ -32,7 +31,7 @@ internal static class ReflectionHelper
     }
 
     public static TAttribute GetSingleAttributeOrDefault<TAttribute>(MemberInfo memberInfo, TAttribute defaultValue = default(TAttribute), bool inherit = true)
-   where TAttribute : Attribute
+        where TAttribute : Attribute
     {
         var attributeType = typeof(TAttribute);
         if (memberInfo.IsDefined(typeof(TAttribute), inherit))

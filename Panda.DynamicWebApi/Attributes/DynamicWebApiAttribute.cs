@@ -11,6 +11,21 @@ public class DynamicWebApiAttribute : Attribute
     /// Equivalent to AreaName
     /// </summary>
     public string Module { get; set; }
+    /// <summary>
+    /// 映射路由
+    /// </summary>
+    public bool Mapping { get; set; }
+
+    /// <summary>
+    /// 是否在SwaggerUI展示
+    /// </summary>
+    public bool Show { get; set; }
+
+    public DynamicWebApiAttribute(bool mapping = true, bool show = true)
+    {
+        Mapping = mapping;
+        Show = show;
+    }
 
     internal static bool IsExplicitlyEnabledFor(Type type)
     {

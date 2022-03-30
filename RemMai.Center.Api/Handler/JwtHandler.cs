@@ -10,3 +10,4 @@ public class JwtHandler : AuthorizationHandler
         return Task.FromResult(true);
     }
 }
+   

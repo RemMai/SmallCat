@@ -60,8 +60,6 @@ internal static class Init
             return !result;
         }).ToList();
 
-        string environmentName = builder.Environment.EnvironmentName;
-
         foreach (string jsonfile in jsonfiles)
         {
             RemMaiApp.ConfigurationManager.AddJsonFile(jsonfile, optional: true, reloadOnChange: true);

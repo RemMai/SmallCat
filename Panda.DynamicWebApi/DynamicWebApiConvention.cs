@@ -34,20 +34,21 @@ public class DynamicWebApiConvention : IApplicationModelConvention
             }
             else
             {
-                if (typeof(IDynamicWebApi).GetTypeInfo().IsAssignableFrom(type))
-                {
-                    controller.ControllerName = controller.ControllerName.RemovePostFix(AppConsts.ControllerPostfixes.ToArray());
-                    ConfigureArea(controller, dynamicWebApiAttr);
-                    ConfigureDynamicWebApi(controller, dynamicWebApiAttr);
-                }
-                else
-                {
-                    if (dynamicWebApiAttr != null)
-                    {
-                        ConfigureArea(controller, dynamicWebApiAttr);
-                        ConfigureDynamicWebApi(controller, dynamicWebApiAttr);
-                    }
-                }
+                controller.ControllerName = controller.ControllerName.RemovePostFix(AppConsts.ControllerPostfixes.ToArray());
+                ConfigureArea(controller, dynamicWebApiAttr);
+                ConfigureDynamicWebApi(controller, dynamicWebApiAttr);
+                //if (typeof(IDynamicWebApi).GetTypeInfo().IsAssignableFrom(type))
+                //{
+
+                //}
+                //else
+                //{
+                //    if (dynamicWebApiAttr != null)
+                //    {
+                //        ConfigureArea(controller, dynamicWebApiAttr);
+                //        ConfigureDynamicWebApi(controller, dynamicWebApiAttr);
+                //    }
+                //}
             }
         }
     }
@@ -177,11 +178,11 @@ public class DynamicWebApiConvention : IApplicationModelConvention
     private bool CheckNoMapMethod(ActionModel action)
     {
         bool isExist = false;
-        var noMapMethod = ReflectionHelper.GetSingleAttributeOrDefault<NonDynamicMethodAttribute>(action.ActionMethod);
+        var noMapMethod = ReflectionHelper.GetSingleAttributeOrDefault<NonActionAttribute>(action.ActionMethod);
 
         if (noMapMethod != null)
         {
-            action.ApiExplorer.IsVisible = false;//对应的Api不映射
+            action.ApiExplorer.IsVisible = false; //对应的Api不映射
             isExist = true;
         }
 
@@ -209,10 +210,16 @@ public class DynamicWebApiConvention : IApplicationModelConvention
         }
     }
 
+
+    /// <summary>
+    /// 配置方法请求方式
+    /// </summary>
+    /// <param name="areaName"></param>
+    /// <param name="controllerName"></param>
+    /// <param name="action"></param>
     private void ConfigureSelector(string areaName, string controllerName, ActionModel action)
     {
-
-        var nonAttr = ReflectionHelper.GetSingleAttributeOrDefault<NonDynamicWebApiAttribute>(action.ActionMethod);
+        var nonAttr = ReflectionHelper.GetSingleAttributeOrDefault<NonActionAttribute>(action.ActionMethod);
 
         if (nonAttr != null)
         {
@@ -232,7 +239,6 @@ public class DynamicWebApiConvention : IApplicationModelConvention
 
     private void AddAppServiceSelector(string areaName, string controllerName, ActionModel action)
     {
-
         var verb = GetHttpVerb(action);
 
         action.ActionName = GetRestFulActionName(action.ActionName);
