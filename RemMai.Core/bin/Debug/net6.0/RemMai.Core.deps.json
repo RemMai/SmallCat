@@ -12,7 +12,6 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.3",
           "Microsoft.Extensions.DependencyModel": "6.0.0",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "6.0.0",
-          "Panda.DynamicWebApi": "1.0.0",
           "RemMai.Common": "1.0.0",
           "Swashbuckle.AspNetCore": "6.3.0"
         },
@@ -263,11 +262,6 @@
           "System.Text.Encodings.Web": "6.0.0"
         }
       },
-      "Panda.DynamicWebApi/1.0.0": {
-        "runtime": {
-          "Panda.DynamicWebApi.dll": {}
-        }
-      },
       "RemMai.Common/1.0.0": {
         "runtime": {
           "RemMai.Common.dll": {}
@@ -497,11 +491,6 @@
       "sha512": "sha512-zaJsHfESQvJ11vbXnNlkrR46IaMULk/gHxYsJphzSF+07kTjPHv+Oc14w6QEOfo3Q4hqLJgStUaYB9DBl0TmWg==",
       "path": "system.text.json/6.0.0",
       "hashPath": "system.text.json.6.0.0.nupkg.sha512"
-    },
-    "Panda.DynamicWebApi/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     },
     "RemMai.Common/1.0.0": {
       "type": "project",

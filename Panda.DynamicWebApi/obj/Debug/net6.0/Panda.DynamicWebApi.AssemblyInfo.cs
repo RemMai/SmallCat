@@ -11,16 +11,13 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("stulzq,staneee")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Panda.DynamicWebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyDescriptionAttribute("ASP.NET Core Dynamic Restful WebApi. Generating WebApi from Classes. Such as: Dir" +
-    "ect Generation of WebApi Based on Business Logic Layer.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Panda.DynamicWebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Panda.DynamicWebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyMetadataAttribute("RepositoryUrl", "https://github.com/dotnetauth/Panda.DynamicWebApi")]
 
 // 由 MSBuild WriteCodeFragment 类生成。
 

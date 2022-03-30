@@ -38,8 +38,7 @@ public static class GlobalObjectInjectExtensions
 
 
         appBuilder.AutoScanConfigurationFile();
-        appBuilder.Services.AddControllers();
-        appBuilder.Services.AddDynamicWebApi();
+        appBuilder.Services.AddControllers().AddDynamicWebApiAndSwaggerGen();
         appBuilder.Services.AutoInject();
 
         return appBuilder;

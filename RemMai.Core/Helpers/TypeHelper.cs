@@ -1,9 +1,14 @@
 using System;
 using System.Reflection;
 
-namespace Panda.DynamicWebApi.Helpers;
+namespace RemMai.Helpers;
 internal static class TypeHelper
 {
+    /// <summary>
+    /// 判断对象是否是委托
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public static bool IsFunc(object obj)
     {
         if (obj == null)
@@ -19,6 +24,7 @@ internal static class TypeHelper
 
         return type.GetGenericTypeDefinition() == typeof(Func<>);
     }
+
 
     public static bool IsFunc<TReturn>(object obj)
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
 
-namespace Panda.DynamicWebApi;
+namespace RemMai.DynamicWebApi;
 public class DynamicWebApiOptions
 {
     public DynamicWebApiOptions()
@@ -13,7 +13,6 @@ public class DynamicWebApiOptions
         FormBodyBindingIgnoredTypes = new List<Type>() { typeof(IFormFile) };
         DefaultHttpVerb = "POST";
         DefaultApiPrefix = "api";
-        AssemblyDynamicWebApiOptions = new Dictionary<Assembly, AssemblyDynamicWebApiOptions>();
     }
 
 
@@ -57,12 +56,7 @@ public class DynamicWebApiOptions
     /// </summary>
     public Func<string, string> GetRestFulActionName { get; set; }
 
-    /// <summary>
-    /// Specifies the dynamic webapi options for the assembly.
-    /// </summary>
-    public Dictionary<Assembly, AssemblyDynamicWebApiOptions> AssemblyDynamicWebApiOptions { get; }
-
-    public ISelectController SelectController { get; set; } = new DefaultSelectController();
+    public IDynamicController DynamicController { get; set; } = new DefaultDynamicController();
     public IActionRouteFactory ActionRouteFactory { get; set; } = new DefaultActionRouteFactory();
 
     /// <summary>
@@ -94,21 +88,5 @@ public class DynamicWebApiOptions
         {
             throw new ArgumentException($"{nameof(RemoveControllerPostfixes)} can not be null.");
         }
-    }
-
-    /// <summary>
-    /// Add the dynamic webapi options for the assembly.
-    /// </summary>
-    /// <param name="assembly"></param>
-    /// <param name="apiPreFix"></param>
-    /// <param name="httpVerb"></param>
-    public void AddAssemblyOptions(Assembly assembly, string apiPreFix = null, string httpVerb = null)
-    {
-        if (assembly == null)
-        {
-            throw new ArgumentException($"{nameof(assembly)} can not be null.");
-        }
-
-        this.AssemblyDynamicWebApiOptions[assembly] = new AssemblyDynamicWebApiOptions(apiPreFix, httpVerb);
     }
 }

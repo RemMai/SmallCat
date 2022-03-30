@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Panda.DynamicWebApi.Helpers;
+namespace RemMai.Helpers;
 internal static class ExtensionMethods
 {
     public static bool IsNullOrEmpty(this string str)

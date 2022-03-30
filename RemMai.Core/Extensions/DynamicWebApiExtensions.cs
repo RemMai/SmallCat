@@ -1,4 +1,4 @@
-﻿using Panda.DynamicWebApi;
+﻿using RemMai.DynamicWebApi;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore;
@@ -20,10 +20,10 @@ public static class DynamicWebApiExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AddDynamicWebApi(this IServiceCollection services)
+    public static IServiceCollection AddDynamicWebApiAndSwaggerGen(this IMvcBuilder mvcBuilder)
     {
         // 注册Swagger
-        services.AddSwaggerGen(options =>
+        mvcBuilder.Services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1", new OpenApiInfo() { Title = "Panda OpenApi", Version = "v1" });
 
@@ -64,14 +64,17 @@ public static class DynamicWebApiExtensions
         });
 
         // 注册PandaDynamicWebApi
-        services.AddDynamicWebApi(options =>
-        {
-            RemMaiApp.ProjectAssemblies.ForEach(assembly =>
-            {
-                options.AssemblyDynamicWebApiOptions.Add(assembly, new AssemblyDynamicWebApiOptions());
-            });
-        });
-        return services;
+        //services.AddDynamicWebApi(options =>
+        //{
+        //    RemMaiApp.ProjectAssemblies.ForEach(assembly =>
+        //    {
+        //        options.AssemblyDynamicWebApiOptions.Add(assembly, new AssemblyDynamicWebApiOptions());
+        //    });
+        //});
+
+        mvcBuilder.AddDynamicWebApi();
+
+        return mvcBuilder.Services;
     }
 }
 

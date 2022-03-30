@@ -1,9 +1,7 @@
 D:\Apps\RemMai.Center\RemMai.Core\bin\Debug\net6.0\RemMai.Core.deps.json
 D:\Apps\RemMai.Center\RemMai.Core\bin\Debug\net6.0\RemMai.Core.dll
 D:\Apps\RemMai.Center\RemMai.Core\bin\Debug\net6.0\RemMai.Core.pdb
-D:\Apps\RemMai.Center\RemMai.Core\bin\Debug\net6.0\Panda.DynamicWebApi.dll
 D:\Apps\RemMai.Center\RemMai.Core\bin\Debug\net6.0\RemMai.Common.dll
-D:\Apps\RemMai.Center\RemMai.Core\bin\Debug\net6.0\Panda.DynamicWebApi.pdb
 D:\Apps\RemMai.Center\RemMai.Core\bin\Debug\net6.0\RemMai.Common.pdb
 D:\Apps\RemMai.Center\RemMai.Core\obj\Debug\net6.0\RemMai.Core.csproj.AssemblyReference.cache
 D:\Apps\RemMai.Center\RemMai.Core\obj\Debug\net6.0\RemMai.Core.GeneratedMSBuildEditorConfig.editorconfig

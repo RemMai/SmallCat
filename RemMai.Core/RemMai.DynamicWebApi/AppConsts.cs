@@ -1,29 +1,52 @@
-﻿using Panda.DynamicWebApi.Helpers;
+﻿using RemMai.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Panda.DynamicWebApi;
-public static class AppConsts
+namespace RemMai.DynamicWebApi;
+internal static class AppConsts
 {
-    public static string DefaultHttpVerb1 { get; set; }
+    /// <summary>
+    /// 默认请求方式
+    /// </summary>
     public static string DefaultHttpVerb { get; set; }
-
+    /// <summary>
+    /// 默认区域名称
+    /// </summary>
     public static string DefaultAreaName { get; set; }
 
+    /// <summary>
+    /// 默认Api路由前缀
+    /// </summary>
     public static string DefaultApiPreFix { get; set; }
 
+    /// <summary>
+    /// 控制器后缀
+    /// </summary>
     public static List<string> ControllerPostfixes { get; set; }
+
+    /// <summary>
+    /// 方法名后缀
+    /// </summary>
     public static List<string> ActionPostfixes { get; set; }
 
+    /// <summary>
+    /// 请求体忽略类型
+    /// </summary>
     public static List<Type> FormBodyBindingIgnoredTypes { get; set; }
 
+    /// <summary>
+    /// Http请求方式
+    /// </summary>
     public static Dictionary<string, string> HttpVerbs { get; set; }
 
+
+    /// <summary>
+    /// 通过Action的名字来判断RestFul的请求方式
+    /// <para></para>
+    /// 以请求方式属性为主
+    /// </summary>
     public static Func<string, string> GetRestFulActionName { get; set; }
-
-    public static Dictionary<Assembly, AssemblyDynamicWebApiOptions> AssemblyDynamicWebApiOptions { get; set; }
-
     static AppConsts()
     {
         HttpVerbs = new Dictionary<string, string>()

@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Panda.DynamicWebApi.Helpers;
+namespace RemMai.Helpers;
 internal static class ReflectionHelper
 {
     public static TAttribute GetSingleAttributeOrDefaultByFullSearch<TAttribute>(TypeInfo info)

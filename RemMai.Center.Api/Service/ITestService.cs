@@ -1,5 +1,4 @@
-﻿using Panda.DynamicWebApi.Attributes;
-using Panda.DynamicWebApi;
+﻿using RemMai.DynamicWebApi;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,14 +6,15 @@ namespace RemMai.Center.Api.Service;
 
 public interface ITestService
 {
-    Task<bool> GetData();
+    void Get();
 }
 
 [DynamicWebApi]
-public class TestService<T> : ITestService where T : class
+public class TestService : ITestService
 {
-    public Task<bool> GetData() 
+    [HttpGet]
+    public void Get()
     {
-        return Task.FromResult(true);
+        Console.WriteLine("333");
     }
 }

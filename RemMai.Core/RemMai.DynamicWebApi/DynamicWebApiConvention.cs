@@ -1,22 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Panda.DynamicWebApi.Attributes;
-using Panda.DynamicWebApi.Helpers;
+using RemMai.Helpers;
 
-namespace Panda.DynamicWebApi;
+namespace RemMai.DynamicWebApi;
 public class DynamicWebApiConvention : IApplicationModelConvention
 {
-    private readonly ISelectController _selectController;
+    private readonly IDynamicController _dynamicController;
     private readonly IActionRouteFactory _actionRouteFactory;
 
-    public DynamicWebApiConvention(ISelectController selectController, IActionRouteFactory actionRouteFactory)
+    public DynamicWebApiConvention(IDynamicController dynamicController, IActionRouteFactory actionRouteFactory)
     {
-        _selectController = selectController;
+        _dynamicController = dynamicController;
         _actionRouteFactory = actionRouteFactory;
     }
 
@@ -27,32 +24,20 @@ public class DynamicWebApiConvention : IApplicationModelConvention
             var type = controller.ControllerType.AsType();
             var dynamicWebApiAttr = ReflectionHelper.GetSingleAttributeOrDefaultByFullSearch<DynamicWebApiAttribute>(type.GetTypeInfo());
 
-            if (!(_selectController is DefaultSelectController) && _selectController.IsController(type))
+            if ((_dynamicController is DefaultDynamicController) || !_dynamicController.IsController(type))
             {
-                controller.ControllerName = controller.ControllerName.RemovePostFix(AppConsts.ControllerPostfixes.ToArray());
-                ConfigureDynamicWebApi(controller, dynamicWebApiAttr);
-            }
-            else
-            {
-                controller.ControllerName = controller.ControllerName.RemovePostFix(AppConsts.ControllerPostfixes.ToArray());
                 ConfigureArea(controller, dynamicWebApiAttr);
-                ConfigureDynamicWebApi(controller, dynamicWebApiAttr);
-                //if (typeof(IDynamicWebApi).GetTypeInfo().IsAssignableFrom(type))
-                //{
-
-                //}
-                //else
-                //{
-                //    if (dynamicWebApiAttr != null)
-                //    {
-                //        ConfigureArea(controller, dynamicWebApiAttr);
-                //        ConfigureDynamicWebApi(controller, dynamicWebApiAttr);
-                //    }
-                //}
             }
+            controller.ControllerName = controller.ControllerName.RemovePostFix(AppConsts.ControllerPostfixes.ToArray());
+            ConfigureDynamicWebApi(controller, dynamicWebApiAttr);
         }
     }
-
+    /// <summary>
+    /// 配置区域
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="attr"></param>
+    /// <exception cref="ArgumentException"></exception>
     private void ConfigureArea(ControllerModel controller, DynamicWebApiAttribute attr)
     {
         if (!controller.RouteValues.ContainsKey("area"))
@@ -171,7 +156,7 @@ public class DynamicWebApiConvention : IApplicationModelConvention
 
     #endregion
     /// <summary>
-    /// //不映射指定的方法
+    /// 不映射指定的方法
     /// </summary>
     /// <param name="action"></param>
     /// <returns></returns>
@@ -188,6 +173,12 @@ public class DynamicWebApiConvention : IApplicationModelConvention
 
         return isExist;
     }
+
+    /// <summary>
+    /// 配置方法请求方式
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="controllerAttr"></param>
     private void ConfigureSelector(ControllerModel controller, DynamicWebApiAttribute controllerAttr)
     {
 
@@ -205,37 +196,27 @@ public class DynamicWebApiConvention : IApplicationModelConvention
 
         foreach (var action in controller.Actions)
         {
-            if (!CheckNoMapMethod(action))
-                ConfigureSelector(areaName, controller.ControllerName, action);
+            // 配置Action
+
+            var nonMapAttr = ReflectionHelper.GetSingleAttributeOrDefault<NonActionAttribute>(action.ActionMethod);
+            if (nonMapAttr != null)
+            {
+                action.ApiExplorer.IsVisible = false; //对应的Api不映射
+                continue;
+            }
+
+            if (action.Selectors.IsNullOrEmpty() || action.Selectors.Any(a => a.ActionConstraints.IsNullOrEmpty()))
+            {
+                if (!CheckNoMapMethod(action))
+                    AddAppServiceSelector(areaName, controller.ControllerName, action);
+            }
+            else
+            {
+                NormalizeSelectorRoutes(areaName, controller.ControllerName, action);
+            }
         }
     }
 
-
-    /// <summary>
-    /// 配置方法请求方式
-    /// </summary>
-    /// <param name="areaName"></param>
-    /// <param name="controllerName"></param>
-    /// <param name="action"></param>
-    private void ConfigureSelector(string areaName, string controllerName, ActionModel action)
-    {
-        var nonAttr = ReflectionHelper.GetSingleAttributeOrDefault<NonActionAttribute>(action.ActionMethod);
-
-        if (nonAttr != null)
-        {
-            return;
-        }
-
-        if (action.Selectors.IsNullOrEmpty() || action.Selectors.Any(a => a.ActionConstraints.IsNullOrEmpty()))
-        {
-            if (!CheckNoMapMethod(action))
-                AddAppServiceSelector(areaName, controllerName, action);
-        }
-        else
-        {
-            NormalizeSelectorRoutes(areaName, controllerName, action);
-        }
-    }
 
     private void AddAppServiceSelector(string areaName, string controllerName, ActionModel action)
     {
@@ -278,7 +259,7 @@ public class DynamicWebApiConvention : IApplicationModelConvention
 
 
     /// <summary>
-    /// Processing action name
+    /// 获取Action的名字
     /// </summary>
     /// <param name="actionName"></param>
     /// <returns></returns>
@@ -325,19 +306,14 @@ public class DynamicWebApiConvention : IApplicationModelConvention
                  AttributeRouteModel.CombineAttributeRouteModel(CreateActionRouteModel(areaName, controllerName, action), selector.AttributeRouteModel);
         }
     }
-
+    /// <summary>
+    /// 获取Http请求动词
+    /// </summary>
+    /// <param name="action"></param>
+    /// <returns></returns>
     private static string GetHttpVerb(ActionModel action)
     {
-        var getValueSuccess = AppConsts.AssemblyDynamicWebApiOptions
-            .TryGetValue(action.Controller.ControllerType.Assembly, out AssemblyDynamicWebApiOptions assemblyDynamicWebApiOptions);
-        if (getValueSuccess && !string.IsNullOrWhiteSpace(assemblyDynamicWebApiOptions?.HttpVerb))
-        {
-            return assemblyDynamicWebApiOptions.HttpVerb;
-        }
-
-
         var verbKey = action.ActionName.GetPascalOrCamelCaseFirstWord().ToLower();
-
         var verb = AppConsts.HttpVerbs.ContainsKey(verbKey) ? AppConsts.HttpVerbs[verbKey] : AppConsts.DefaultHttpVerb;
         return verb;
     }

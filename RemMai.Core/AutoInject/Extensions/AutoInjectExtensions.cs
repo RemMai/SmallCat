@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
-using Panda.DynamicWebApi;
+using RemMai.DynamicWebApi;
 using RemMai.Inject;
 namespace RemMai.Extensions;
 

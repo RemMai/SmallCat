@@ -404,19 +404,6 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "Panda.DynamicWebApi/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/Panda.DynamicWebApi.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Panda.DynamicWebApi.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
-      },
       "RemMai.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -1199,11 +1186,6 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Panda.DynamicWebApi/1.0.0": {
-      "type": "project",
-      "path": "../Panda.DynamicWebApi/Panda.DynamicWebApi.csproj",
-      "msbuildProject": "../Panda.DynamicWebApi/Panda.DynamicWebApi.csproj"
-    },
     "RemMai.Common/1.0.0": {
       "type": "project",
       "path": "../RemMai.Common/RemMai.Common.csproj",
@@ -1216,7 +1198,6 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.3",
       "Microsoft.Extensions.DependencyModel >= 6.0.0",
       "Microsoft.Extensions.Options.ConfigurationExtensions >= 6.0.0",
-      "Panda.DynamicWebApi >= 1.0.0",
       "RemMai.Common >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.3.0"
     ]
@@ -1253,9 +1234,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Apps\\RemMai.Center\\Panda.DynamicWebApi\\Panda.DynamicWebApi.csproj": {
-              "projectPath": "D:\\Apps\\RemMai.Center\\Panda.DynamicWebApi\\Panda.DynamicWebApi.csproj"
-            },
             "D:\\Apps\\RemMai.Center\\RemMai.Common\\RemMai.Common.csproj": {
               "projectPath": "D:\\Apps\\RemMai.Center\\RemMai.Common\\RemMai.Common.csproj"
             }
