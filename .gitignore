@@ -1,5 +1,9 @@
 # Visual Studio 
 
+# Build files
+*.dll
+*.pdb
+
 # User-specific files
 *.suo
 *.user
