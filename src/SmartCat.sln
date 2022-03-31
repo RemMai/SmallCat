@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemMai.Common", "RemMai.Com
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemMai.Center.Api", "RemMai.Center.Api\RemMai.Center.Api.csproj", "{D32FD353-4F1D-427C-BAB0-9924372BA3DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemMai.Core", "RemMai.Core\RemMai.Core.csproj", "{ADE3D69E-21CA-4DA4-8F69-464B3741F073}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartCat", "SmartCat\SmartCat.csproj", "{ADE3D69E-21CA-4DA4-8F69-464B3741F073}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

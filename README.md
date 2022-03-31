@@ -1,1 +1,1 @@
-<p> 你好 </p>
+<img src="./logo.png" />
