@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reflection;
-using RemMai.Helpers;
+using SmartCat.Helpers;
 
-namespace RemMai.DynamicWebApi;
+namespace SmartCat.DynamicWebApi;
 [Serializable]
 [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class)]
 public class DynamicWebApiAttribute : Attribute

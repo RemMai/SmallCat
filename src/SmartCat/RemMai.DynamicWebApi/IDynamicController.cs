@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
-using RemMai.Helpers;
+using SmartCat.DynamicWebApi.Helpers;
 
-namespace RemMai.DynamicWebApi;
-public interface IDynamicController
+namespace SmartCat.DynamicWebApi;
+internal interface IDynamicController
 {
     bool IsController(Type type);
 }
@@ -20,14 +20,14 @@ internal class DefaultDynamicController : IDynamicController
             return false;
         }
 
-        var mapRouter = ReflectionHelper.GetSingleAttributeOrDefaultByFullSearch<DynamicWebApiAttribute>(typeInfo);
+        var dynamicWebApiAttribute = ReflectionHelper.GetSingleAttributeOrDefaultByFullSearch<DynamicWebApiAttribute>(typeInfo);
 
-        if ((mapRouter != null && mapRouter.MapRouter == false) || mapRouter == null)
+        if ((dynamicWebApiAttribute != null && dynamicWebApiAttribute.MapRouter == false) || dynamicWebApiAttribute == null)
         {
             return false;
         }
 
-        if (mapRouter == null || ReflectionHelper.GetSingleAttributeOrDefaultByFullSearch<NonControllerAttribute>(typeInfo) != null)
+        if (ReflectionHelper.GetSingleAttributeOrDefaultByFullSearch<NonControllerAttribute>(typeInfo) != null)
         {
             return false;
         }

@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
-using RemMai.DynamicWebApi;
-using RemMai.Inject;
-namespace RemMai.Extensions;
+using SmartCat.DynamicWebApi;
+using SmartCat.Inject;
+namespace SmartCat.Extensions;
 
 public static class AutoInjectExtensions
 {

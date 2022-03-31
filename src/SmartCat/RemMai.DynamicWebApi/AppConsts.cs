@@ -1,9 +1,9 @@
-﻿using RemMai.Helpers;
+﻿using SmartCat.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace RemMai.DynamicWebApi;
+namespace SmartCat.DynamicWebApi;
 internal static class AppConsts
 {
     /// <summary>

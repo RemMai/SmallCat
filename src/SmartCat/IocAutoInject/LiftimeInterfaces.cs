@@ -1,4 +1,4 @@
-﻿namespace RemMai.Inject
+﻿namespace SmartCat.Inject
 {
     public interface IScoped { }
 

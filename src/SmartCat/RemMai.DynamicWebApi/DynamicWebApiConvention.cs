@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using RemMai.Helpers;
+using SmartCat.DynamicWebApi.Helpers;
 
-namespace RemMai.DynamicWebApi;
-public class DynamicWebApiConvention : IApplicationModelConvention
+namespace SmartCat.DynamicWebApi;
+internal class DynamicWebApiConvention : IApplicationModelConvention
 {
     private readonly IDynamicController _dynamicController;
     private readonly IActionRouteFactory _actionRouteFactory;

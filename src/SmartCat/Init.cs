@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RemMai;
+namespace SmartCat;
 
 internal static class Init
 {
@@ -62,7 +62,7 @@ internal static class Init
 
         foreach (string jsonfile in jsonfiles)
         {
-            RemMaiApp.ConfigurationManager.AddJsonFile(jsonfile, optional: true, reloadOnChange: true);
+            Cat.ConfigurationManager.AddJsonFile(jsonfile, optional: true, reloadOnChange: true);
         }
 
         return builder;

@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using RemMai.Helpers;
+using SmartCat.DynamicWebApi.Helpers;
 
-namespace RemMai.DynamicWebApi;
+namespace SmartCat.DynamicWebApi;
 /// <summary>
 /// Add Dynamic WebApi
 /// </summary>

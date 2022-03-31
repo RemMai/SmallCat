@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace RemMai.DynamicWebApi;
-public interface IActionRouteFactory
+namespace SmartCat.DynamicWebApi;
+internal interface IActionRouteFactory
 {
     string CreateActionRouteModel(string areaName, string controllerName, ActionModel action);
 }

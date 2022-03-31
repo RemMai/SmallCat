@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace RemMai.Helpers;
+namespace SmartCat.DynamicWebApi.Helpers;
 internal static class ReflectionHelper
 {
     public static TAttribute GetSingleAttributeOrDefaultByFullSearch<TAttribute>(TypeInfo info)

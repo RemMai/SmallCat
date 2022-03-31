@@ -9,12 +9,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RemMai;
+namespace SmartCat;
 
 /// <summary>
 /// Props
 /// </summary>
-public static partial class RemMaiApp
+public static partial class Cat
 {
     public static IWebHostEnvironment Environment { get; internal set; }
     public static ConfigurationManager ConfigurationManager { get; internal set; }
@@ -30,7 +30,7 @@ public static partial class RemMaiApp
 /// <summary>
 /// Acitons
 /// </summary>
-public static partial class RemMaiApp
+public static partial class Cat
 {
     public static T GetService<T>()
     {

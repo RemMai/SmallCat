@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
 
-namespace RemMai.DynamicWebApi;
+namespace SmartCat.DynamicWebApi;
 public class DynamicWebApiOptions
 {
     public DynamicWebApiOptions()

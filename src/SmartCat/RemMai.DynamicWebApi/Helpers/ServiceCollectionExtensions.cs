@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace RemMai.Helpers;
+namespace SmartCat.DynamicWebApi.Helpers;
 internal static class ServiceCollectionExtensions
 {
     public static bool IsAdded<T>(this IServiceCollection services)

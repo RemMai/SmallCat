@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace RemMai.Helpers;
+namespace SmartCat.DynamicWebApi.Helpers;
 internal static class ExtensionMethods
 {
     public static bool IsNullOrEmpty(this string str)

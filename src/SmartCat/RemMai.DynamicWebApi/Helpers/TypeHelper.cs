@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace RemMai.Helpers;
+namespace SmartCat.DynamicWebApi.Helpers;
 internal static class TypeHelper
 {
     /// <summary>

@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Controllers;
 
-namespace RemMai.DynamicWebApi;
-public class DynamicWebApiControllerFeatureProvider : ControllerFeatureProvider
+namespace SmartCat.DynamicWebApi;
+internal class DynamicWebApiControllerFeatureProvider : ControllerFeatureProvider
 {
     private IDynamicController _dynamicController;
 
