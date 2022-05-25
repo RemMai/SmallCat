@@ -2,7 +2,7 @@
 
 
 
-namespace RemMai.Extensions;
+namespace SmartCat.Extensions;
 
 public static class FreeSqlExtensions
 {

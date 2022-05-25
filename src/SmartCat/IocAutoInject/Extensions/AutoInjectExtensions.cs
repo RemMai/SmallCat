@@ -1,9 +1,10 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
-using SmartCat.DynamicWebApi;
+using SmartCat;
 using SmartCat.Inject;
-namespace SmartCat.Extensions;
+
+namespace SmartCat.Extensions.IocAutoInject;
 
 public static class AutoInjectExtensions
 {
@@ -16,14 +17,14 @@ public static class AutoInjectExtensions
     {
         List<Type> lifeTypes = new() { typeof(IScoped), typeof(ISingleton), typeof(ITransient) };
 
-        List<Type> allTypes = RemMaiApp.ProjectAssemblies.SelectMany(e =>
+        List<Type> allTypes = Cat.ProjectAssemblies.SelectMany(e =>
             e.GetTypes().Where(g => g.IsPublic && (g.IsDefined(typeof(AutoInjectAttribute)) || g.GetInterfaces().Intersect(lifeTypes).Any()))
         ).ToList();
 
         foreach (var type in allTypes)
         {
             var interfaces = type.GetInterfaces();
-            AutoInjectAttribute attr = type.GetCustomAttribute<AutoInjectAttribute>();
+            AutoInjectAttribute attr = type.GetCustomAttribute<AutoInjectAttribute>()!;
             if (attr == null)
             {
                 var _interface = interfaces.Last(e => e.IsPublic && lifeTypes.Contains(e));

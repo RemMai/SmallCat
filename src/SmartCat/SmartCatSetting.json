@@ -1,0 +1,9 @@
+{
+  "JwtSetting": {
+    "IssuerSigningKey": "RemMai",
+    "ValidateIssuerSigningKey": true,
+    "RequireExpirationTime": true,
+    "ClockSkew": 30,
+    "ValidateIssuer": true
+  }
+}

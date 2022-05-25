@@ -16,15 +16,14 @@ namespace SmartCat;
 /// </summary>
 public static partial class Cat
 {
-    public static IWebHostEnvironment Environment { get; internal set; }
-    public static ConfigurationManager ConfigurationManager { get; internal set; }
-    public static IConfiguration Configuration { get => ConfigurationManager; }
+    public static IWebHostEnvironment? Environment { get; internal set; }
+    public static ConfigurationManager? ConfigurationManager { get; internal set; }
+    public static IConfiguration? Configuration { get => ConfigurationManager; }
     public static string ExecuteDirectory { get; } = AppContext.BaseDirectory;
     public static List<Assembly> ProjectAssemblies { get; } = Init.GetProjectAssemblies();
-    public static IServiceCollection Services { get; internal set; }
-
-    public static HttpContext HttpContext { get; internal set; }
-    public static ServiceProvider ServiceProvider { get; internal set; }
+    public static IServiceCollection? Services { get; internal set; }
+    public static HttpContext? HttpContext => GetService<IHttpContextAccessor>()!.HttpContext;
+    public static ServiceProvider? ServiceProvider { get; internal set; }
 }
 
 /// <summary>
@@ -32,10 +31,7 @@ public static partial class Cat
 /// </summary>
 public static partial class Cat
 {
-    public static T GetService<T>()
-    {
-        return ServiceProvider.GetService<T>();
-    }
+    public static T GetService<T>() => ServiceProvider!.GetService<T>() ?? throw new Exception($"Not Find {typeof(T).Name} Service!");
 }
 
 

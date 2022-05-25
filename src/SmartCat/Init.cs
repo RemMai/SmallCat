@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartCat;
 
@@ -33,22 +27,22 @@ internal static class Init
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    public static WebApplicationBuilder AutoScanConfigurationFile(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AutoScanConfigurationFile(this WebApplicationBuilder builder, List<string>? filterJosnFileList = null)
     {
         var path = AppDomain.CurrentDomain.BaseDirectory;
 
         // 过滤的Json文件
-        List<string> filterJsonName = new List<string>()
+        List<string> filterJsonName = filterJosnFileList ?? new List<string>()
         {
             "appsettings.Development.json",
             "appsettings.json",
             ".deps.json",
             ".runtimeconfig.json",
         };
-        List<string> jsonfiles = Directory.GetFiles(path, "*.json").Where(fileName =>
+
+        List<string> jsonfiles = Directory.GetFiles(path, "*.json").OrderBy(e => e == "SmartCatSetting.Json" ? 1 : 2).Where(fileName =>
         {
             bool result = false;
-
             foreach (string filterName in filterJsonName)
             {
                 result = Path.GetFileName(fileName).ToLower().Contains(filterName.ToLower());

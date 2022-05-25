@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RemMai.Inject;
-
-namespace RemMai.Inject;
+namespace SmartCat.Inject;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public class AutoInjectAttribute : Attribute

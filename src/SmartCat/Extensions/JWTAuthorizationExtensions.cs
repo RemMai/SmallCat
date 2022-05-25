@@ -10,8 +10,9 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using SmartCat.Model;
 
-namespace RemMai.Extensions;
+namespace SmartCat.Extensions.Authorization;
 
 public static class JWTAuthorizationExtensions
 {
@@ -23,7 +24,7 @@ public static class JWTAuthorizationExtensions
     /// <param name="authenticationConfigure">授权配置</param>
     /// <param name="jwtBearerConfigure">jwt配置</param>
     /// <returns></returns>
-    public static IServiceCollection AddJwtAuthorization<AuthorizationHandler>(this IServiceCollection services, bool globaAuthorization = true, Action<AuthenticationOptions> authenticationConfigure = null, Action<JwtBearerOptions> jwtBearerConfigure = null)
+    public static IServiceCollection AddJwtAuthorization<AuthorizationHandler>(this IServiceCollection services, bool globaAuthorization = true, Action<AuthenticationOptions>? authenticationConfigure = null, Action<JwtBearerOptions>? jwtBearerConfigure = null)
         where AuthorizationHandler : class, IAuthorizationHandler
     {
         services.AddTransient<IAuthorizationHandler, AuthorizationHandler>();
@@ -41,9 +42,8 @@ public static class JWTAuthorizationExtensions
             authenticationConfigure?.Invoke(options);
         }).AddJwtBearer(options =>
         {
-
             var jwtSetting = new JwtSetting();
-            RemMaiApp.Configuration.Bind("JwtSetting", jwtSetting);
+            Cat.Configuration.Bind("JwtSetting", jwtSetting);
 
             options.TokenValidationParameters = new TokenValidationParameters
             {
