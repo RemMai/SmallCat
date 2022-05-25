@@ -45,14 +45,14 @@ public static class GlobalObjectInjectExtensions
         Cat.Services = appBuilder.Services;
 
         // 注册服务提供器
-        Cat.ServiceProvider = appBuilder.Services.BuildServiceProvider(false);
+        //Cat.ServiceProvider = appBuilder.Services.BuildServiceProvider(false);
 
         return appBuilder;
     }
     public static WebApplicationBuilder InitSmartCat<THandler>(this WebApplicationBuilder appBuilder, Action<SmartCatOptions>? smartCatOption = null) where THandler : class, IAuthorizationHandler
     {
-        appBuilder.InitSmartCat(smartCatOption);
         appBuilder.Services.AddJwtAuthorization<THandler>();
+        appBuilder.InitSmartCat(smartCatOption);
         return appBuilder;
     }
 

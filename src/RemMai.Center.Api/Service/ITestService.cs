@@ -1,4 +1,4 @@
-﻿using RemMai.DynamicWebApi;
+﻿using SmartCat.DynamicWebApi;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,15 +6,16 @@ namespace RemMai.Center.Api.Service;
 
 public interface ITestService
 {
-    void Get();
+    string GetService();
 }
 
 [DynamicWebApi]
-public class TestService : ITestService
+public class TestService : ITestService, IDynamicWebApi
 {
     [HttpGet]
-    public void Get()
+    public string GetService()
     {
         Console.WriteLine("333");
+        return "Data";
     }
 }

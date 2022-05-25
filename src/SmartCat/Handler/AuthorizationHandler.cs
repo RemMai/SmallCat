@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using SmartCat.Inject;
 
 namespace SmartCat;
 
