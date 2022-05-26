@@ -1,8 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyModel;
-using SmartCat;
-using SmartCat.Inject;
+using SmartCat.AutoInject;
 
 namespace SmartCat.Extensions.IocAutoInject;
 

@@ -28,7 +28,7 @@ public static class JWTAuthorizationExtensions
         where AuthorizationHandler : class, IAuthorizationHandler
     {
         services.AddTransient<IAuthorizationHandler, AuthorizationHandler>();
-
+        var configuration = services.BuildServiceProvider(false).GetService<IConfiguration>();
         if (globaAuthorization)
         {
             services.Configure<MvcOptions>(options => options.Filters.Add(new AuthorizeFilter()));
@@ -43,7 +43,7 @@ public static class JWTAuthorizationExtensions
         }).AddJwtBearer(options =>
         {
             var jwtSetting = new JwtSetting();
-            Cat.Configuration.Bind("JwtSetting", jwtSetting);
+            configuration.Bind("JwtSetting", jwtSetting);
 
             options.TokenValidationParameters = new TokenValidationParameters
             {

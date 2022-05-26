@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-namespace SmartCat.Inject;
+namespace SmartCat.AutoInject;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public class AutoInjectAttribute : Attribute

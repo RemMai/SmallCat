@@ -1,11 +1,8 @@
-﻿using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.Extensions.Options;
 
 namespace SmartCat.Extensions.Swagger;
 /// <summary>
@@ -17,18 +14,6 @@ namespace SmartCat.Extensions.Swagger;
 /// </summary>
 public static class SmartCatSwaggerExtensions
 {
-    /// <summary>
-    /// </summary>
-    /// <param name="services"></param>
-    /// <returns></returns>
-    public static IServiceCollection AddSmartCatSwagger(this IMvcBuilder mvcBuilder, Action<SwaggerGenOptions>? swaggerGenOptions = null)
-    {
-        // 注册Swagger
-        mvcBuilder.Services.AddSmartCatSwagger(swaggerGenOptions);
-
-        return mvcBuilder.Services;
-    }
-
     public static IServiceCollection AddSmartCatSwagger(this IServiceCollection services, Action<SwaggerGenOptions>? swaggerGenOptions = null)
     {
         if (swaggerGenOptions == null)
@@ -82,10 +67,8 @@ public static class SmartCatSwaggerExtensions
 
     public static IApplicationBuilder UseSmartCatSwaggerUI(this IApplicationBuilder app)
     {
-        Console.WriteLine(typeof(SmartCatOptions).Assembly.FullName);
         app.UseSwaggerUI(options =>
         {
-            var steam = typeof(SmartCatOptions).Assembly.GetManifestResourceStream("SmartCat.Swagger.UI.index.html");
             options.IndexStream = () => typeof(SmartCatOptions).Assembly.GetManifestResourceStream("SmartCat.Swagger.UI.index.html");
             options.RoutePrefix = "swagger";
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "V1 Docs");

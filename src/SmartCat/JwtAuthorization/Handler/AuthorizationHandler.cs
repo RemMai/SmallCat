@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using SmartCat.Inject;
 
 namespace SmartCat;
-
 public abstract class AuthorizationHandler : IAuthorizationHandler
 {
     /// <summary>
@@ -10,7 +8,7 @@ public abstract class AuthorizationHandler : IAuthorizationHandler
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public virtual Task<bool> IsAuth(AuthorizationHandlerContext context)
+    public virtual Task<bool> CheckAuthorization(AuthorizationHandlerContext context)
     {
         return Task.FromResult(true);
     }
@@ -24,9 +22,9 @@ public abstract class AuthorizationHandler : IAuthorizationHandler
     {
         var noAuthRequirements = context.PendingRequirements;
 
-        var isAuth = await IsAuth(context);
+        var authorization = await CheckAuthorization(context);
 
-        if (isAuth)
+        if (authorization)
         {
             context.Succeed(noAuthRequirements.First());
         }
