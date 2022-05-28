@@ -42,7 +42,7 @@ public static class SmartCatMiniProfilerExtensions
         var configuration = app.ApplicationServices.GetService<IConfiguration>();
 
         var isEnable = configuration.GetValue<bool>("MiniProfiler");
-
+            
         if (isEnable) app.UseMiniProfiler();
 
         return app;

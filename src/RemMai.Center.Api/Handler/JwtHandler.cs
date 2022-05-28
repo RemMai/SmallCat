@@ -6,7 +6,7 @@ namespace RemMai.Center.Api.Handler;
 
 public class JwtHandler : AuthorizationHandler
 {
-    public override Task<bool> IsAuth(AuthorizationHandlerContext context)
+    public override Task<bool> CheckAuthorization(AuthorizationHandlerContext context)
     {
         return Task.FromResult(true);
     }

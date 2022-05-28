@@ -24,6 +24,7 @@ public static partial class Cat
     public static IServiceCollection? Services { get; internal set; }
     public static HttpContext? HttpContext => GetService<IHttpContextAccessor>()!.HttpContext;
     public static ServiceProvider? ServiceProvider { get; internal set; }
+    internal static bool GlobaAuthorization { get; set; } = true;
 }
 
 /// <summary>
