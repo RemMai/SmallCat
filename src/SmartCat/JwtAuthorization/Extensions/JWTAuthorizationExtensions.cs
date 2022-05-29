@@ -25,10 +25,31 @@ public static class JWTAuthorizationExtensions
     /// <returns></returns>
     public static IServiceCollection AddJwtAuthorization<AuthorizationHandler>(this IServiceCollection services, Action<AuthenticationOptions>? authenticationConfigure = null, Action<JwtBearerOptions>? jwtBearerConfigure = null) where AuthorizationHandler : class, IAuthorizationHandler
     {
+        var configuration = services.BuildServiceProvider(false).GetService<IConfiguration>();
+
         services.AddTransient<IAuthorizationHandler, AuthorizationHandler>();
 
         services.Configure<MvcOptions>(options => options.Filters.Add(new AuthorizeFilter()));
 
+        services.AddAuthentication(option =>
+        {
+            option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(option =>
+        {
+            var jwtSetting = new JwtSetting();
+            configuration.Bind(nameof(JwtSetting), jwtSetting);
+            option.TokenValidationParameters = new TokenValidationParameters
+            {
+                // 签名密钥
+                IssuerSigningKey = new SymmetricSecurityKey(key: jwtSetting.IssuerSigningKeyByteArray),
+                ValidateIssuerSigningKey = jwtSetting.ValidateIssuerSigningKey,
+                RequireExpirationTime = jwtSetting.RequireExpirationTime,
+                ClockSkew = TimeSpan.FromSeconds(jwtSetting.ClockSkew),
+                ValidateIssuer = jwtSetting.ValidateIssuer,
+            };
+        });
         return services;
     }
 

@@ -10,10 +10,6 @@ using SmartCat.Extensions.DynamicWebApi;
 using SmartCat.Extensions.Authorization;
 using SmartCat.Extensions.IocAutoInject;
 using SmartCat.Extensions.MiniProfiler;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using SmartCat.Model;
-using Microsoft.IdentityModel.Tokens;
 
 namespace SmartCat;
 
@@ -48,6 +44,10 @@ public static class GlobalObjectInjectExtensions
         // 注册服务提供器
         Cat.ServiceProvider = appBuilder.Services.BuildServiceProvider(false);
 
+
+        appBuilder.Services.AddAuthentication();
+        appBuilder.Services.AddAuthorization();
+
         return appBuilder;
     }
 
@@ -67,43 +67,13 @@ public static class GlobalObjectInjectExtensions
     }
     private static IServiceCollection InjectSmartCat<THandler>(this IMvcBuilder mvcBuilder, SmartCatOptions? options = null) where THandler : class, IAuthorizationHandler
     {
-        if (options.GlobaAuthorization)
-        {
-            mvcBuilder.Services.AddJwtAuthorization<THandler>(options.AuthenticationConfigure, options.JwtBearerConfigure);
-
-            mvcBuilder.Services.AddAuthorization();
-        }
-
+        mvcBuilder.Services.AddJwtAuthorization<THandler>(options.AuthenticationConfigure, options.JwtBearerConfigure);
         mvcBuilder.InjectSmartCat(options);
 
         return mvcBuilder.Services;
     }
     private static IServiceCollection InjectSmartCat(this IMvcBuilder mvcBuilder, SmartCatOptions? options = null)
     {
-        var configuration = mvcBuilder.Services.BuildServiceProvider(false).GetService<IConfiguration>();
-
-        mvcBuilder.Services.AddAuthentication(option =>
-        {
-            option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(option =>
-        {
-            var jwtSetting = new JwtSetting();
-            configuration.Bind(nameof(JwtSetting), jwtSetting);
-            option.TokenValidationParameters = new TokenValidationParameters
-            {
-                // 签名密钥
-                IssuerSigningKey = new SymmetricSecurityKey(key: jwtSetting.IssuerSigningKeyByteArray),
-                ValidateIssuerSigningKey = jwtSetting.ValidateIssuerSigningKey,
-                RequireExpirationTime = jwtSetting.RequireExpirationTime,
-                ClockSkew = TimeSpan.FromSeconds(jwtSetting.ClockSkew),
-                ValidateIssuer = jwtSetting.ValidateIssuer,
-            };
-        });
-
-        mvcBuilder.Services.AddAuthorization();
-
         mvcBuilder.Services.AddDynamicWebApi(options.DynamicWebApiConfiguration);
         mvcBuilder.Services.AddSmartCatSwagger(options.SwaggerGenOptions);
         mvcBuilder.Services.AddSmartCatMiniProfiler();
@@ -122,8 +92,8 @@ public static class GlobalObjectInjectExtensions
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapControllers().RequireAuthorization();
-            endpoints.MapSwagger().RequireAuthorization();
+            endpoints.MapControllers();
+            endpoints.MapSwagger();
         });
         return app;
     }

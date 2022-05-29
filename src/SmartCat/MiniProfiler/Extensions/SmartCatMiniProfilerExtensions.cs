@@ -22,9 +22,8 @@ public static class SmartCatMiniProfilerExtensions
     {
         var configuration = services.BuildServiceProvider(false).GetService<IConfiguration>();
 
-        var isEnable = configuration.GetValue<bool>("MiniProfiler");
-
-        if (isEnable)
+        var isEnable = configuration.GetSection("MiniProfiler").Value;
+        if (isEnable == null || configuration.GetValue<bool>("MiniProfiler"))
         {
             services.AddMiniProfiler(options =>
             {
@@ -41,11 +40,9 @@ public static class SmartCatMiniProfilerExtensions
     {
         var configuration = app.ApplicationServices.GetService<IConfiguration>();
 
-        var isEnable = configuration.GetValue<bool>("MiniProfiler");
-            
-        if (isEnable) app.UseMiniProfiler();
+        var isEnable = configuration.GetSection("MiniProfiler").Value;
+        if (isEnable == null || configuration.GetValue<bool>("MiniProfiler")) app.UseMiniProfiler();
 
         return app;
     }
 }
-

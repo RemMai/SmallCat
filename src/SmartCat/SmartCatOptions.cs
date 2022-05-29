@@ -10,10 +10,6 @@ namespace SmartCat
         public Action<DynamicWebApiOptions>? DynamicWebApiConfiguration { get; set; } = null;
         public Action<SwaggerGenOptions>? SwaggerGenOptions { get; set; } = null;
         /// <summary>
-        /// 默认授权 自定义Jwt授权
-        /// </summary>
-        public bool GlobaAuthorization { get; set; } = false;
-        /// <summary>
         /// 授权配置
         /// </summary>
         public Action<AuthenticationOptions>? AuthenticationConfigure = null;
