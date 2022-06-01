@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemMai.Common", "RemMai.Common\RemMai.Common.csproj", "{AAE2B65D-D541-496F-AD8C-3EC13EE38DBE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemMai.Center.Api", "RemMai.Center.Api\RemMai.Center.Api.csproj", "{D32FD353-4F1D-427C-BAB0-9924372BA3DA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartCat", "SmartCat\SmartCat.csproj", "{ADE3D69E-21CA-4DA4-8F69-464B3741F073}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AAE2B65D-D541-496F-AD8C-3EC13EE38DBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AAE2B65D-D541-496F-AD8C-3EC13EE38DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AAE2B65D-D541-496F-AD8C-3EC13EE38DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AAE2B65D-D541-496F-AD8C-3EC13EE38DBE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D32FD353-4F1D-427C-BAB0-9924372BA3DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D32FD353-4F1D-427C-BAB0-9924372BA3DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D32FD353-4F1D-427C-BAB0-9924372BA3DA}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -2,14 +2,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SmartCat.Extensions;
 using SmartCat.Extensions.Swagger;
 using SmartCat.Extensions.DynamicWebApi;
 using SmartCat.Extensions.Authorization;
 using SmartCat.Extensions.IocAutoInject;
 using SmartCat.Extensions.MiniProfiler;
+using SmartCat.Extensions.AutoScanConfiguration;
+using Microsoft.AspNetCore.Mvc;
+using SmartCat.Filter.DataValidation;
 
 namespace SmartCat;
 
@@ -43,10 +44,6 @@ public static class GlobalObjectInjectExtensions
 
         // 注册服务提供器
         Cat.ServiceProvider = appBuilder.Services.BuildServiceProvider(false);
-
-
-        appBuilder.Services.AddAuthentication();
-        appBuilder.Services.AddAuthorization();
 
         return appBuilder;
     }
@@ -84,8 +81,8 @@ public static class GlobalObjectInjectExtensions
 
     public static IApplicationBuilder UseSmartCat(this IApplicationBuilder app)
     {
-        app.UseAuthentication();
         app.UseRouting();
+        app.UseAuthentication();
         app.UseAuthorization();
         app.UseSmartCatSwaggerUI();
         app.UseSmartCatMiniProfiler();

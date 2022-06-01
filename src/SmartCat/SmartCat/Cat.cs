@@ -2,19 +2,14 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartCat;
 
 /// <summary>
 /// Props
 /// </summary>
-public static partial class Cat
+public static class Cat
 {
     public static IWebHostEnvironment? Environment { get; internal set; }
     public static ConfigurationManager? ConfigurationManager { get; internal set; }
@@ -24,16 +19,11 @@ public static partial class Cat
     public static IServiceCollection? Services { get; internal set; }
     public static HttpContext? HttpContext => GetService<IHttpContextAccessor>()!.HttpContext;
     public static ServiceProvider? ServiceProvider { get; internal set; }
-    internal static bool GlobaAuthorization { get; set; } = true;
-}
-
-/// <summary>
-/// Acitons
-/// </summary>
-public static partial class Cat
-{
+    /// <summary>
+    /// 获取服务
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static T GetService<T>() => ServiceProvider!.GetService<T>() ?? throw new Exception($"Not Find {typeof(T).Name} Service!");
 }
-
-
-

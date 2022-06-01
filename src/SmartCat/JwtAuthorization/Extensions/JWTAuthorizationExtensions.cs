@@ -28,9 +28,7 @@ public static class JWTAuthorizationExtensions
         var configuration = services.BuildServiceProvider(false).GetService<IConfiguration>();
 
         services.AddTransient<IAuthorizationHandler, AuthorizationHandler>();
-
-        services.Configure<MvcOptions>(options => options.Filters.Add(new AuthorizeFilter()));
-
+        IAuthorizationHandlerProvider
         services.AddAuthentication(option =>
         {
             option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -50,6 +48,10 @@ public static class JWTAuthorizationExtensions
                 ValidateIssuer = jwtSetting.ValidateIssuer,
             };
         });
+
+        services.Configure<MvcOptions>(options => options.Filters.Add(new AuthorizeFilter()));
+
+        services.AddAuthorization();
         return services;
     }
 
