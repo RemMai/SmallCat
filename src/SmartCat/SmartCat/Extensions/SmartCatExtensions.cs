@@ -11,6 +11,8 @@ using SmartCat.Extensions.MiniProfiler;
 using SmartCat.Extensions.AutoScanConfiguration;
 using Microsoft.AspNetCore.Mvc;
 using SmartCat.Filter.DataValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 
 namespace SmartCat;
 
@@ -44,6 +46,12 @@ public static class GlobalObjectInjectExtensions
 
         // 注册服务提供器
         Cat.ServiceProvider = appBuilder.Services.BuildServiceProvider(false);
+
+
+        appBuilder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => (Cat.ConfigurationManager as IConfiguration).Bind("JwtSettings", options));
+
+        appBuilder.Services.AddAuthorization();
 
         return appBuilder;
     }

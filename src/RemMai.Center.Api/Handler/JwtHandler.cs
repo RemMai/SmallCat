@@ -4,18 +4,10 @@ using SmartCat;
 
 namespace RemMai.Center.Api.Handler;
 
-//public class JwtHandler : AuthorizationHandler
-//{
-//    public override Task<bool> CheckAuthorization(AuthorizationHandlerContext context)
-//    {
-//        return Task.FromResult(false);
-//    }
-//}
-
-public class JwtHandler : IAsyncAuthorizationFilter
+public class JwtHandler : AuthorizationHandler
 {
-    public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
+    public override Task<bool> CheckAuthorization(AuthorizationHandlerContext context)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(false);
     }
 }

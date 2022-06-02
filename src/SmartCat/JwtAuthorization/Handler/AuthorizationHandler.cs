@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace SmartCat;
-public abstract class AuthorizationHandler : IAsyncAuthorizationFilter  // IAuthorizationHandler, IFilterMetadata
+public abstract class AuthorizationHandler :  IAuthorizationHandler, IFilterMetadata
 {
     /// <summary>
     /// 验证鉴权是否成功
@@ -30,10 +30,5 @@ public abstract class AuthorizationHandler : IAsyncAuthorizationFilter  // IAuth
             context.Succeed(noAuthRequirements.First());
         }
         else context.Fail();
-    }
-
-    public Task OnAuthorizationAsync(AuthorizationFilterContext context)
-    {
-        throw new NotImplementedException();    
     }
 }
