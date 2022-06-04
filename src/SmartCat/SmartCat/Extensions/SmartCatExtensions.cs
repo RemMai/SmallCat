@@ -10,7 +10,7 @@ using SmartCat.Extensions.IocAutoInject;
 using SmartCat.Extensions.MiniProfiler;
 using SmartCat.Extensions.AutoScanConfiguration;
 using Microsoft.AspNetCore.Mvc;
-using SmartCat.Filter.DataValidation;
+using SmartCat.Filter.Action;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using SmartCat.Filter.Authorize;

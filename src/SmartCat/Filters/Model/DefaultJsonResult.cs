@@ -12,5 +12,6 @@ namespace SmartCat.Filter.Model
         public string Message { get; set; }
         public bool Success { get; set; }
         public object Data { get; set; }
+        public object Error { get; set; }
     }
 }
