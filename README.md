@@ -6,7 +6,7 @@
 ❤️ DotNet版本: 7-Preview4
 🐳 更新时间: 2022.06.05
 
-💟功能点：
+💟功能点：  
 DynamicWebApi（致敬[Panda.DynamicWebApi](https://github.com/pda-team/Panda.DynamicWebApi)）
 
 MiniProfiler（半残）
