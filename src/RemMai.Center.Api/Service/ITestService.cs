@@ -15,8 +15,8 @@ public class TestService : ITestService, IDynamicWebApi
     [HttpGet]
     public string GetService()
     {
+        throw new Exception("测试错误");
         var data = SmartCat.Cat.HttpContext;
-
         Console.WriteLine("333");
         return "Data";
     }

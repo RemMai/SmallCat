@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using SmartCat.Filter.Authorize;
 using SmartCat.Model;
 
 namespace SmartCat.Extensions.Authorization;
@@ -28,8 +29,6 @@ public static class JWTAuthorizationExtensions
         var configuration = services.BuildServiceProvider(false).GetService<IConfiguration>();
 
         services.AddTransient<IAuthorizationHandler, AuthorizationHandler>();
-
-        services.Configure<MvcOptions>(options => options.Filters.Add(new AuthorizeFilter()));
 
         return services;
     }

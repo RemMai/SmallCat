@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartCat.Filter.DataValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
+using SmartCat.Filter.Authorize;
 
 namespace SmartCat;
 
@@ -56,25 +57,13 @@ public static class GlobalObjectInjectExtensions
         return appBuilder;
     }
 
-    public static IServiceCollection InjectSmartCat<THandler>(this IMvcBuilder mvcBuilder, Action<SmartCatOptions>? smartCatOption = null) where THandler : class, IAuthorizationHandler
-    {
-        var options = new SmartCatOptions();
-        smartCatOption?.Invoke(options);
-        mvcBuilder.InjectSmartCat<THandler>(options);
-        return mvcBuilder.Services;
-    }
-    public static IServiceCollection InjectSmartCat(this IMvcBuilder mvcBuilder, Action<SmartCatOptions>? smartCatOption = null)
+    public static IServiceCollection InjectSmartCat(this IMvcBuilder mvcBuilder, Action<SmartCatOptions>? smartCatOption = null, Action<IServiceCollection>? serviceCollection = null)
     {
         var options = new SmartCatOptions();
         smartCatOption?.Invoke(options);
         mvcBuilder.InjectSmartCat(options);
-        return mvcBuilder.Services;
-    }
-    private static IServiceCollection InjectSmartCat<THandler>(this IMvcBuilder mvcBuilder, SmartCatOptions? options = null) where THandler : class, IAuthorizationHandler
-    {
-        mvcBuilder.Services.AddJwtAuthorization<THandler>(options.AuthenticationConfigure, options.JwtBearerConfigure);
-        mvcBuilder.InjectSmartCat(options);
-
+        // 注册其他服务
+        serviceCollection?.Invoke(mvcBuilder.Services);
         return mvcBuilder.Services;
     }
     private static IServiceCollection InjectSmartCat(this IMvcBuilder mvcBuilder, SmartCatOptions? options = null)
