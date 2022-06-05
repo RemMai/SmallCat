@@ -3,9 +3,9 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace SmartCat;
-{
-    internal static class ServiceCollectionExtensions
+namespace SmartCat.Helpers;
+
+internal static class ServiceCollectionExtensions
 {
     public static bool IsAdded<T>(this IServiceCollection services)
     {
@@ -75,5 +75,4 @@ namespace SmartCat;
         builderAction?.Invoke(builder);
         return serviceProviderFactory.CreateServiceProvider(builder);
     }
-}
 }

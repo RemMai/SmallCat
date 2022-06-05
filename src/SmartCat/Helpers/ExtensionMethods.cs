@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SmartCat;
+namespace SmartCat.Helpers;
 
 internal static class ExtensionMethods
 {

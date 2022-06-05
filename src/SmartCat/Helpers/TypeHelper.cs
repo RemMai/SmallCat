@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace SmartCat;
+namespace SmartCat.Helpers;
 
 internal static class TypeHelper
 {

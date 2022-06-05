@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using SmartCat.DynamicWebApi.Helpers;
+using SmartCat.Helpers;
 
 namespace SmartCat.DynamicWebApi;
 [Serializable, AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class)]

@@ -10,7 +10,10 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 using SmartCat.DynamicWebApi;
-using SmartCat.DynamicWebApi.Helpers;
+using SmartCat.Helpers;
+using SmartCat.RestFul;
+
+
 using SmartCat.Model;
 
 namespace SmartCat.DynamicWebApi
@@ -89,30 +92,23 @@ namespace SmartCat.DynamicWebApi
 
         private void ConfigureResult(ControllerModel controller)
         {
-            NonUnifiedResultAttribute classAttr = ReflectionHelper.GetSingleAttributeOrDefault<NonUnifiedResultAttribute>(controller.ControllerType);
+            var typeEnable = controller.ControllerType.SkipRestFulByTypeInfo();
             foreach (var action in controller.Actions)
             {
                 if (!CheckNoMapMethod(action))
                 {
-                    NonUnifiedResultAttribute methodAttr = ReflectionHelper.GetSingleAttributeOrDefault<NonUnifiedResultAttribute>(action.ActionMethod);
-                    bool result;
-                    if (methodAttr == null)
+                    var methodEnable = action.ActionMethod.SkipRestFulByMothodInfo();
+
+                    if (!RestFulContextHelper.SkipRestFul(methodEnable, typeEnable))
                     {
-                        result = classAttr == null || !classAttr.IsEffective;
-                    }
-                    else
-                    {
-                        result = !methodAttr.IsEffective;
-                    }
-                    if (result)
-                    {
-                        var returnType = action.ActionMethod.GetRealReturnType();
-                        if (returnType != null)
+                        var realAction = action.ActionMethod.GetRealReturnType();
+                        if (!realAction.HasImplementedRawGeneric(typeof(RestFulResult<>)))
                         {
-                            if (returnType.HasImplementedRawGeneric(typeof(RestFulResult<>)))
-                                returnType = typeof(RestFulResult<>).MakeGenericType(returnType);
+
+                            var restFulResultType = typeof(RestFulResult<>).MakeGenericType(realAction);
+                            action.Filters.Add(new ProducesResponseTypeAttribute(restFulResultType, StatusCodes.Status200OK));
                         }
-                        action.Filters.Add(new ProducesResponseTypeAttribute(returnType, StatusCodes.Status200OK));
+
                     }
                 }
             }

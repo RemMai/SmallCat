@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using SmartCat.Filter.Authorization;
+using SmartCat.RestFul;
 
 namespace RemMai.Center.Api.Fillter
 {

@@ -1,20 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SmartCat.Extensions.Swagger;
+using SmartCat.Extensions.AutoScanConfiguration;
 using SmartCat.Extensions.DynamicWebApi;
-using SmartCat.Extensions.Authorization;
 using SmartCat.Extensions.IocAutoInject;
 using SmartCat.Extensions.MiniProfiler;
-using SmartCat.Extensions.AutoScanConfiguration;
-using Microsoft.AspNetCore.Mvc;
-using SmartCat.Filter.Action;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using SmartCat.Filter.Authorization;
-using SmartCat.Filter.Exception;
+using SmartCat.Extensions.Swagger;
+using SmartCat.RestFul;
+
 
 namespace SmartCat;
 

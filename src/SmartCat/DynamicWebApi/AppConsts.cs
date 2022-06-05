@@ -1,4 +1,4 @@
-﻿using SmartCat.DynamicWebApi.Helpers;
+﻿using SmartCat.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reflection;

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using SmartCat;
+using SmartCat.Model;
 
 namespace RemMai.Center.Api.Service;
 
@@ -14,7 +15,7 @@ public interface ITestService
 
     Task<int> GetInt(int a);
 
-    Task<int> GetName(RequestData name);
+    Task<RestFulResult<int>> GetName(RequestData name);
 }
 
 [DynamicWebApi]
@@ -36,10 +37,10 @@ public class TestService : ITestService, IDynamicWebApi
     {
         return a;
     }
-    [HttpPost, NonUnifiedResult(false)]
-    public async Task<int> GetName(RequestData name)
+    [HttpPost]
+    public async Task<RestFulResult<int>> GetName(RequestData name)
     {
-        return name.Age;
+        return new RestFulResult<int>() { Data = name.Age };
     }
 }
 

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SmartCat.DynamicWebApi;
-using SmartCat.DynamicWebApi.Helpers;
+using SmartCat.Helpers;
 
 namespace SmartCat.Extensions.DynamicWebApi;
 

@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartCat.Filter.Action
+namespace SmartCat.RestFul;
+
+public class SimpleAsyncActionFilter : IAsyncActionFilter
 {
-    public class SimpleAsyncActionFilter : IAsyncActionFilter
+    public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
-        {
-            await next();
-        }
+        await next();
     }
 }

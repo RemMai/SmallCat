@@ -1,15 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SmartCat.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Controllers;
+using SmartCat.Helpers;
 using System.Reflection;
-using SmartCat.Filters;
 
 namespace SmartCat.RestFul;
 
@@ -56,9 +51,12 @@ public static class RestFulContextHelper
         var controller = (context.ActionDescriptor as ControllerActionDescriptor);
         var method = controller.MethodInfo;
         var type = controller.ControllerTypeInfo;
+        return SkipRestFul(method.SkipRestFulByMothodInfo(), type.SkipRestFulByTypeInfo());
+    }
 
-        var methodEnable = method.SkipRestFulByMothodInfo();
-        var typeEnable = type.SkipRestFulByTypeInfo();
+
+    public static bool SkipRestFul(bool? methodEnable, bool? typeEnable)
+    {
         if (methodEnable.HasValue)
         {
             return methodEnable.Value;

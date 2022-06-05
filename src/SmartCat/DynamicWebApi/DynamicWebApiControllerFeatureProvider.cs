@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using SmartCat.DynamicWebApi;
-using SmartCat.DynamicWebApi.Helpers;
+using SmartCat.Helpers;
 
 namespace SmartCat.DynamicWebApi
 {

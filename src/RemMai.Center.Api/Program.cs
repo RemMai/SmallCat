@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RemMai.Center.Api.Fillter;
 using SmartCat;
-using SmartCat.Filter.Action;
-using SmartCat.Filter.Exception;
+using SmartCat.RestFul;
 
 var builder = WebApplication.CreateBuilder(args).InitSmartCat();
 builder.Services.AddControllers().InjectSmartCat(null, services =>
