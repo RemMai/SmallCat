@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 using SmartCat.DynamicWebApi;
 using SmartCat.DynamicWebApi.Helpers;
+using SmartCat.Model;
 
 namespace SmartCat.DynamicWebApi
 {
@@ -82,14 +84,47 @@ namespace SmartCat.DynamicWebApi
             ConfigureApiExplorer(controller);
             ConfigureSelector(controller, controllerAttr);
             ConfigureParameters(controller);
+            ConfigureResult(controller);
         }
 
-
-        private void ConfigureParameters(ControllerModel controller)
+        private void ConfigureResult(ControllerModel controller)
         {
+            NonUnifiedResultAttribute classAttr = ReflectionHelper.GetSingleAttributeOrDefault<NonUnifiedResultAttribute>(controller.ControllerType);
             foreach (var action in controller.Actions)
             {
                 if (!CheckNoMapMethod(action))
+                {
+                    NonUnifiedResultAttribute methodAttr = ReflectionHelper.GetSingleAttributeOrDefault<NonUnifiedResultAttribute>(action.ActionMethod);
+                    bool result;
+                    if (methodAttr == null)
+                    {
+                        result = classAttr == null || !classAttr.IsEffective;
+                    }
+                    else
+                    {
+                        result = !methodAttr.IsEffective;
+                    }
+                    if (result)
+                    {
+                        var returnType = action.ActionMethod.GetRealReturnType();
+                        if (returnType != null)
+                        {
+                            if (returnType.HasImplementedRawGeneric(typeof(RestFulResult<>)))
+                                returnType = typeof(RestFulResult<>).MakeGenericType(returnType);
+                        }
+                        action.Filters.Add(new ProducesResponseTypeAttribute(returnType, StatusCodes.Status200OK));
+                    }
+                }
+            }
+        }
+
+        private void ConfigureParameters(ControllerModel controller)
+        {
+
+            foreach (var action in controller.Actions)
+            {
+                if (!CheckNoMapMethod(action))
+                {
                     foreach (var para in action.Parameters)
                     {
                         if (para.BindingInfo != null)
@@ -105,6 +140,7 @@ namespace SmartCat.DynamicWebApi
                             }
                         }
                     }
+                }
             }
         }
 
@@ -125,7 +161,6 @@ namespace SmartCat.DynamicWebApi
 
                 foreach (var actionConstraint in selector.ActionConstraints)
                 {
-
                     var httpMethodActionConstraint = actionConstraint as HttpMethodActionConstraint;
                     if (httpMethodActionConstraint == null)
                     {
@@ -342,7 +377,7 @@ namespace SmartCat.DynamicWebApi
 
         private AttributeRouteModel CreateActionRouteModel(string areaName, string controllerName, ActionModel action)
         {
-            var route =  _actionRouteFactory.CreateActionRouteModel(areaName, controllerName, action);
+            var route = _actionRouteFactory.CreateActionRouteModel(areaName, controllerName, action);
 
             return new AttributeRouteModel(new RouteAttribute(route));
         }

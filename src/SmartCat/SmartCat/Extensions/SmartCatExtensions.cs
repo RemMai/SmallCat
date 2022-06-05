@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 using SmartCat.Filter.Action;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
-using SmartCat.Filter.Authorize;
+using SmartCat.Filter.Authorization;
+using SmartCat.Filter.Exception;
 
 namespace SmartCat;
 
@@ -50,7 +51,7 @@ public static class GlobalObjectInjectExtensions
 
 
         appBuilder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => (Cat.ConfigurationManager as IConfiguration).Bind("JwtSettings", options));
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => Cat.ConfigurationManager.Bind("JwtSettings", options));
 
         appBuilder.Services.AddAuthorization();
 
@@ -72,6 +73,20 @@ public static class GlobalObjectInjectExtensions
         mvcBuilder.Services.AddSmartCatSwagger(options.SwaggerGenOptions);
         mvcBuilder.Services.AddSmartCatMiniProfiler();
         mvcBuilder.Services.AddEndpointsApiExplorer();
+
+        mvcBuilder.Services.Configure<MvcOptions>(option =>
+        {
+            option.Filters.Add<SimpleActionFilter>();
+            option.Filters.Add<SimpleAsyncActionFilter>();
+            option.Filters.Add<SimpleExceptionFilter>();
+        });
+
+        mvcBuilder.AddJsonOptions(option =>
+        {
+            option.JsonSerializerOptions.PropertyNamingPolicy = null;
+        });
+
+
         return mvcBuilder.Services;
     }
 

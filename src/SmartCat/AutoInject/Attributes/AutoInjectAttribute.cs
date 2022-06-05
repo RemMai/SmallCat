@@ -31,7 +31,6 @@ public class AutoInjectAttribute : Attribute
     /// </summary>
     public Type InjectType { get; set; } = typeof(IScoped);
 
-
     public string InjectName { get => InjectType.Name; }
 }
 

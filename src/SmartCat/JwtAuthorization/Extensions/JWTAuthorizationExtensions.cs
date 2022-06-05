@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using SmartCat.Filter.Authorize;
+using SmartCat.Filter.Authorization;
 using SmartCat.Model;
 
 namespace SmartCat.Extensions.Authorization;

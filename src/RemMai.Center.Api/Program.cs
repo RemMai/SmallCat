@@ -10,15 +10,6 @@ builder.Services.AddControllers().InjectSmartCat(null, services =>
     services.Configure<MvcOptions>(options =>
     {
         options.Filters.Add<AuthorizetionFilter>();
-        options.Filters.Add<SimpleActionFilter>();
-        options.Filters.Add<SimpleAsyncActionFilter>();
-        options.Filters.Add<SimpleExceptionFilter>();
-    });
-
-
-    services.Configure<ApiBehaviorOptions>(options =>
-    {
-        options.SuppressModelStateInvalidFilter = true;
     });
 });
 

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using SmartCat.Filter.Authorize;
+using SmartCat.Filter.Authorization;
 
 namespace RemMai.Center.Api.Fillter
 {
-    public class AuthorizetionFilter : SimpleAuthorizeFilter
+    public class AuthorizetionFilter : SimpleAuthorizetionFilter
     {
-        public override bool Authorization(AuthorizationFilterContext context)
+        public override bool CheckAuthorization(AuthorizationFilterContext context)
         {
             return true;
         }

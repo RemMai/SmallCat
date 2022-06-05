@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using SmartCat;
 
 namespace RemMai.Center.Api.Service;
 
@@ -35,7 +36,7 @@ public class TestService : ITestService, IDynamicWebApi
     {
         return a;
     }
-    [HttpPost]
+    [HttpPost, NonUnifiedResult(false)]
     public async Task<int> GetName(RequestData name)
     {
         return name.Age;
