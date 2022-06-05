@@ -25,7 +25,6 @@ namespace SmartCat.Filter.Action
                         errors.Add(error.ErrorMessage);
                     }
                 }
-
                 DefaultJsonResult result = new DefaultJsonResult()
                 {
                     Success = false,

@@ -14,6 +14,12 @@ builder.Services.AddControllers().InjectSmartCat(null, services =>
         options.Filters.Add<SimpleAsyncActionFilter>();
         options.Filters.Add<SimpleExceptionFilter>();
     });
+
+
+    services.Configure<ApiBehaviorOptions>(options =>
+    {
+        options.SuppressModelStateInvalidFilter = true;
+    });
 });
 
 var app = builder.Build();
