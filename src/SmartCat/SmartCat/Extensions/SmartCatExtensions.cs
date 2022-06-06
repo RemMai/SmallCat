@@ -25,7 +25,7 @@ public static class GlobalObjectInjectExtensions
     public static WebApplicationBuilder InitSmartCat(this WebApplicationBuilder appBuilder, Action<SmartCatOptions>? smartCatOption = null)
     {
         // 全局服务注入 
-        appBuilder.Services.AutoInject();
+        appBuilder.Services.AddAutoDi();
 
         // 注册Configuration
         Cat.ConfigurationManager = appBuilder.Configuration;

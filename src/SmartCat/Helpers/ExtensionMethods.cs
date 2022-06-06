@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace SmartCat.Helpers;
 
 internal static class ExtensionMethods
 {
+    /// <summary>
+    /// 判断字符串是否为空
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
     public static bool IsNullOrEmpty(this string str)
     {
         return string.IsNullOrEmpty(str);
@@ -84,7 +87,6 @@ internal static class ExtensionMethods
         return str;
     }
 
-
     public static string Left(this string str, int len)
     {
         if (str == null)
@@ -99,7 +101,6 @@ internal static class ExtensionMethods
 
         return str.Substring(0, len);
     }
-
 
     public static string Right(this string str, int len)
     {

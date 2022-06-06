@@ -1,17 +1,17 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using SmartCat.AutoInject;
+using SmartCat.AutoDi;
 
-namespace SmartCat.Extensions.IocAutoInject;
+namespace SmartCat.Extensions.AutoDi;
 
-public static class AutoInjectExtensions
+public static class AutoDiExtensions
 {
     /// <summary>
     /// 自动注册标识的服务
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AutoInject(this IServiceCollection services)
+    public static IServiceCollection AddAutoDi(this IServiceCollection services)
     {
         List<Type> lifeTypes = new() { typeof(IScoped), typeof(ISingleton), typeof(ITransient) };
 

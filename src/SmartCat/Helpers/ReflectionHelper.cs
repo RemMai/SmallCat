@@ -9,9 +9,13 @@ namespace SmartCat.Helpers;
 
 internal static class ReflectionHelper
 {
-
-    public static TAttribute GetSingleAttributeOrDefaultByFullSearch<TAttribute>(TypeInfo info)
-        where TAttribute : Attribute
+    /// <summary>
+    /// 获取第一个标记属性 / 空（完整搜索）
+    /// </summary>
+    /// <typeparam name="TAttribute"></typeparam>
+    /// <param name="info"></param>
+    /// <returns></returns>
+    public static TAttribute GetSingleAttributeOrDefaultByFullSearch<TAttribute>(this TypeInfo info) where TAttribute : Attribute
     {
         var attributeType = typeof(TAttribute);
         if (info.IsDefined(attributeType, true))
@@ -34,21 +38,27 @@ internal static class ReflectionHelper
         return null;
     }
 
-    public static TAttribute GetSingleAttributeOrDefault<TAttribute>(MemberInfo memberInfo, TAttribute defaultValue = default(TAttribute), bool inherit = true)
-   where TAttribute : Attribute
+    /// <summary>
+    /// 获取第一个标记属性 / 空
+    /// </summary>
+    /// <typeparam name="TAttribute"></typeparam>
+    /// <param name="memberInfo"></param>
+    /// <param name="defaultValue"></param>
+    /// <param name="inherit"></param>
+    /// <returns></returns>
+    public static TAttribute GetSingleAttributeOrDefault<TAttribute>(this MemberInfo memberInfo, TAttribute defaultValue = default(TAttribute), bool inherit = true) where TAttribute : Attribute
     {
         var attributeType = typeof(TAttribute);
         if (memberInfo.IsDefined(typeof(TAttribute), inherit))
         {
             return memberInfo.GetCustomAttributes(attributeType, inherit).Cast<TAttribute>().First();
         }
-
         return defaultValue;
     }
 
 
     /// <summary>
-    /// Gets a single attribute for a member.
+    /// 获取 MemberInfo 的第一个属性或者空
     /// </summary>
     /// <typeparam name="TAttribute">Type of the attribute</typeparam>
     /// <param name="memberInfo">The member that will be checked for the attribute</param>
@@ -71,7 +81,13 @@ internal static class ReflectionHelper
         return default(TAttribute);
     }
 
-
+    /// <summary>
+    /// 获取 Type 的第一个属性或者空
+    /// </summary>
+    /// <typeparam name="TAttribute"></typeparam>
+    /// <param name="type"></param>
+    /// <param name="inherit"></param>
+    /// <returns></returns>
     public static TAttribute GetSingleAttributeOfTypeOrBaseTypesOrNull<TAttribute>(this Type type, bool inherit = true)
         where TAttribute : Attribute
     {
@@ -89,13 +105,20 @@ internal static class ReflectionHelper
         return type.GetTypeInfo().BaseType.GetSingleAttributeOfTypeOrBaseTypesOrNull<TAttribute>(inherit);
     }
 
-    public static bool IsAsyncMethod(this MethodInfo method) => method.GetCustomAttribute<AsyncMethodBuilderAttribute>() != null || method.ReturnType.ToString().StartsWith(typeof(Task).FullName);
     /// <summary>
-    /// 获取真实的返回值，如果是Task<>的话，则获取Task内地泛型，如果是Task的话则返回Void;
+    /// 判断方法是否是异步方法
     /// </summary>
     /// <param name="method"></param>
     /// <returns></returns>
-    public static Type GetRealReturnType(this MethodInfo method) => method.IsAsyncMethod() ? (method.ReturnType.GenericTypeArguments.FirstOrDefault() ?? typeof(void)) : method.ReturnType;
+    public static bool IsAsyncMethod(this MethodInfo method) => method.GetCustomAttribute<AsyncMethodBuilderAttribute>() != null || method.ReturnType.ToString().StartsWith(typeof(Task).FullName);
+    /// <summary>
+    /// 获取类型Task&lt;Type&gt;真实的类型
+    /// <para></para>
+    /// 如果被Task包裹，则返回包裹的类型，如果没被包裹则返回其本身，如果单独为Task，则返回typeof(void)
+    /// </summary>
+    /// <param name="method"></param>
+    /// <returns></returns>
+    public static Type GetRealType(this MethodInfo method) => method.IsAsyncMethod() ? (method.ReturnType.GenericTypeArguments.FirstOrDefault() ?? typeof(void)) : method.ReturnType;
 
 
     /// <summary>

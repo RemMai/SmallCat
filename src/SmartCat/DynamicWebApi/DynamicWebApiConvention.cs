@@ -101,10 +101,9 @@ namespace SmartCat.DynamicWebApi
 
                     if (!RestFulContextHelper.SkipRestFul(methodEnable, typeEnable))
                     {
-                        var realAction = action.ActionMethod.GetRealReturnType();
+                        var realAction = action.ActionMethod.GetRealType();
                         if (!realAction.HasImplementedRawGeneric(typeof(RestFulResult<>)))
                         {
-
                             var restFulResultType = typeof(RestFulResult<>).MakeGenericType(realAction);
                             action.Filters.Add(new ProducesResponseTypeAttribute(restFulResultType, StatusCodes.Status200OK));
                         }

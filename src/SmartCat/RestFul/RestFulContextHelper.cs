@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using SmartCat.Model;
 using SmartCat.Helpers;
+using SmartCat.Model;
 using System.Reflection;
 
 namespace SmartCat.RestFul;
@@ -17,7 +17,6 @@ public static class RestFulContextHelper
     /// <returns></returns>
     public static ActionExecutingContext DataValidation(this ActionExecutingContext context)
     {
-
         if (!context.ModelState.IsValid)
         {
             List<string> errors = new List<string>();
@@ -54,7 +53,12 @@ public static class RestFulContextHelper
         return SkipRestFul(method.SkipRestFulByMothodInfo(), type.SkipRestFulByTypeInfo());
     }
 
-
+    /// <summary>
+    /// 跳过RestFul序列化响应
+    /// </summary>
+    /// <param name="methodEnable"></param>
+    /// <param name="typeEnable"></param>
+    /// <returns></returns>
     public static bool SkipRestFul(bool? methodEnable, bool? typeEnable)
     {
         if (methodEnable.HasValue)
@@ -90,10 +94,6 @@ public static class RestFulContextHelper
         }
         return context;
     }
-
-
-
-
 
 
     public static bool? SkipRestFulByMothodInfo(this MethodInfo methodInfo)
