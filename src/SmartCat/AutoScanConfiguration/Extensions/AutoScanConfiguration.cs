@@ -20,33 +20,30 @@ namespace SmartCat.Extensions.AutoScanConfiguration
         {
             var path = AppDomain.CurrentDomain.BaseDirectory;
 
-            // 过滤的Json文件
+            var smartCatJsonConfiguration = Helpers.ResourceHelper.GetJsonResources();
+            smartCatJsonConfiguration.ForEach(e =>
+            {
+                Cat.ConfigurationManager.AddJsonStream(e);
+                var data = Cat.ConfigurationManager.GetSection("JwtSettings").Get<Model.JwtSetting>();
+            });
+
+            // 自定义 Configuration Files //
+            // 需要过滤的Json文件
             List<string> filterJsonName = filterJosnFileList ?? new List<string>()
-                    {
-                        "appsettings.Development.json",
-                        "appsettings.json",
-                        ".deps.json",
-                        ".runtimeconfig.json",
-                    };
-
-            List<string> jsonfiles = Directory.GetFiles(path, "*.json").OrderBy(e => e == "SmartCatSetting.Json" ? 1 : 2).Where(fileName =>
             {
-                bool result = false;
-                foreach (string filterName in filterJsonName)
-                {
-                    result = Path.GetFileName(fileName).ToLower().Contains(filterName.ToLower());
-                    if (result)
-                    {
-                        break;
-                    }
-                }
-                return !result;
-            }).ToList();
+                "appsettings.Development.json",
+                ".deps.json",
+                ".runtimeconfig.json",
+            };
 
-            foreach (string jsonfile in jsonfiles)
-            {
-                Cat.ConfigurationManager.AddJsonFile(jsonfile, optional: true, reloadOnChange: true);
-            }
+            var data = Directory.GetFiles(path, "*.json");
+
+            data.ToList().ForEach(e => Console.WriteLine(e));
+
+            Directory.GetFiles(path, "*.json")
+                .Where(fileName => filterJsonName.Any(t => fileName.EndsWith(t)))
+                .ToList()
+                .ForEach(e=> Cat.ConfigurationManager.AddJsonFile(e, optional: true, reloadOnChange: true));
 
             return builder;
         }

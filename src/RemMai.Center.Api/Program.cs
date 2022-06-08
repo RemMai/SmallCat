@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using RemMai.Center.Api.Fillter;
-using SmartCat;
-using SmartCat.RestFul;
+using SmartCat; 
+
 
 var builder = WebApplication.CreateBuilder(args).InitSmartCat();
+
 builder.Services.AddControllers().InjectSmartCat(null, services =>
 {
     services.Configure<MvcOptions>(options =>

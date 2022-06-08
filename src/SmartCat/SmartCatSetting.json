@@ -1,5 +1,5 @@
 {
-  "JwtSetting": {
+  "JwtSettings": {
     "IssuerSigningKey": "RemMai",
     "ValidateIssuerSigningKey": true,
     "RequireExpirationTime": true,

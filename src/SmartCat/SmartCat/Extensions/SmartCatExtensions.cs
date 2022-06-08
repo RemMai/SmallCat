@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SmartCat.Extensions.AutoDi;
 using SmartCat.Extensions.AutoScanConfiguration;
 using SmartCat.Extensions.DynamicWebApi;
-using SmartCat.Extensions.IocAutoInject;
 using SmartCat.Extensions.MiniProfiler;
 using SmartCat.Extensions.Swagger;
+using SmartCat.Model;
 using SmartCat.RestFul;
 
 
@@ -33,21 +34,22 @@ public static class GlobalObjectInjectExtensions
         // 注册Environment
         Cat.Environment = appBuilder.Environment;
 
-        // 注册全局请求上下文
-        appBuilder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-        // 自动扫描Json配置文件
-        appBuilder.AutoScanConfigurationFile();
-
         // 注册服务集合
         Cat.Services = appBuilder.Services;
 
         // 注册服务提供器
         Cat.ServiceProvider = appBuilder.Services.BuildServiceProvider(false);
 
+        // 注册全局请求上下文
+        appBuilder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+        // 自动扫描Json配置文件
+        appBuilder.AutoScanConfigurationFile();
 
         appBuilder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => Cat.ConfigurationManager.Bind("JwtSettings", options));
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => {
+                    Cat.ConfigurationManager.Bind("JwtSettings", options);
+                });
 
         appBuilder.Services.AddAuthorization();
 
@@ -81,7 +83,6 @@ public static class GlobalObjectInjectExtensions
         {
             option.JsonSerializerOptions.PropertyNamingPolicy = null;
         });
-
 
         return mvcBuilder.Services;
     }

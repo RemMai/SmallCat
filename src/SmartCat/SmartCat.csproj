@@ -16,6 +16,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="SmartCatSetting.json" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="SmartCatSetting.json" />
 		<EmbeddedResource Include="Swagger\UI\favicon-16x16.png" />
 		<EmbeddedResource Include="Swagger\UI\favicon-32x32.png" />
 		<EmbeddedResource Include="Swagger\UI\index.css" />
@@ -42,13 +46,9 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="7.0.0-preview.4.22229.4" />
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0-preview.4.22229.4" />
 		<PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
+		<PackageReference Include="nulastudio.NetCoreBeauty" Version="1.2.9.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<None Update="SmartCatSetting.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
 
 </Project>
