@@ -9,6 +9,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CliWrap" Version="3.4.4" />
+		<PackageReference Include="IdleBus" Version="1.5.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0-preview.4.22251.1" />
 	</ItemGroup>
 

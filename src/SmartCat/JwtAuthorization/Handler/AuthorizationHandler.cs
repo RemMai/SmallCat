@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace SmartCat;
+
+[Obsolete]
 public abstract class AuthorizationHandler :  IAuthorizationHandler, IFilterMetadata
 {
     /// <summary>
@@ -9,6 +11,7 @@ public abstract class AuthorizationHandler :  IAuthorizationHandler, IFilterMeta
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
+    [Obsolete]
     public virtual Task<bool> CheckAuthorization(AuthorizationHandlerContext context)
     {
         return Task.FromResult(true);

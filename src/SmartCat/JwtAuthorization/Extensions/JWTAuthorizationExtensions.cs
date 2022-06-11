@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace SmartCat.Extensions.Authorization;
 
+[Obsolete]
 public static class JWTAuthorizationExtensions
 {
     /// <summary>
@@ -15,6 +16,7 @@ public static class JWTAuthorizationExtensions
     /// <param name="authenticationConfigure">授权配置</param>
     /// <param name="jwtBearerConfigure">jwt配置</param>
     /// <returns></returns>
+    [Obsolete]
     public static IServiceCollection AddJwtAuthorization<AuthorizationHandler>(this IServiceCollection services, Action<AuthenticationOptions>? authenticationConfigure = null, Action<JwtBearerOptions>? jwtBearerConfigure = null) where AuthorizationHandler : class, IAuthorizationHandler
     {
         var configuration = services.BuildServiceProvider(false).GetService<IConfiguration>();

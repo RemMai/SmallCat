@@ -1,18 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using RemMai.Center.Api.Fillter;
-using SmartCat; 
-
-
+using RemMai.Center.Api;
+using SmartCat;
 var builder = WebApplication.CreateBuilder(args).InitSmartCat();
-
-builder.Services.AddControllers().InjectSmartCat(null, services =>
-{
-    services.Configure<MvcOptions>(options =>
-    {
-        options.Filters.Add<AuthorizetionFilter>();
-    });
-});
-
+builder.Services.AddControllers().InjectSmartCat();
 var app = builder.Build();
 app.UseSmartCat();
 app.Run();

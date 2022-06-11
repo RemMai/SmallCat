@@ -9,17 +9,17 @@ using SmartCat.Model;
 
 namespace SmartCat.RestFul;
 
-public abstract class SimpleAsyncAuthorizationFilter : IAsyncAuthorizationFilter
+internal class SimpleAsyncAuthorizationFilter : IAsyncAuthorizationFilter
 {
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
-        if (!CheckAuthorization(context))
-        {
-            context.HttpContext.Response.StatusCode = 401;
-            context.Result = new JsonResult(NoAuthorizationResult());
-            await Task.Run(() => { });
-        }
+        //if (!CheckAuthorization(context))
+        //{
+        //    context.HttpContext.Response.StatusCode = 401;
+        //    context.Result = new JsonResult(NoAuthorizationResult());
+        //    await Task.Run(() => { });
+        //}
+       //var factory = context.
+
     }
-    public virtual bool CheckAuthorization(AuthorizationFilterContext context) => true;
-    public virtual object NoAuthorizationResult() => new RestFulResult<object>() { Message = "The Request NoAuthorization!", StatusCode = 401, Success = false };
 }
