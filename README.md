@@ -10,7 +10,7 @@
 💟功能点：  
 
 🍐DynamicWebApi（致敬[Panda.DynamicWebApi](https://github.com/pda-team/Panda.DynamicWebApi)）  
-🍋MiniProfiler（半残）  
+🍋MiniProfiler 
 🥝统一响应处理  
 🍓统一异常处理（SmartCatMiao.Gugu）  
 🍇统一授权处理  
