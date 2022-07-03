@@ -1,5 +1,5 @@
 ﻿using FreeSql.DataAnnotations;
-using SmartCat.DataBase;
+using SmartCat.FreeSql;
 
 namespace RemMai.Center.Api.Model
 {

@@ -8,6 +8,6 @@ namespace SmartCat.Model;
 
 public class FreeSqlEntityGroup
 {
-    public string Key { get; internal set; }
-    public List<Type> Types { get; internal set; }
+    public Type Locker { get; internal set; }
+    public List<Type> Entities { get; internal set; }
 }

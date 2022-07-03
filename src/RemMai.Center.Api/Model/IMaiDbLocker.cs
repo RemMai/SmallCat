@@ -1,8 +1,5 @@
-﻿using SmartCat.DataBase;
+﻿using SmartCat.FreeSqlExtensions;
 
-namespace RemMai.Center.Api.Model
-{
-    public interface IMaiDbLocker : IDbLocker
-    {
-    }
-}
+
+namespace RemMai.Center.Api.Model;
+public interface IMaiDbLocker : IDbLocker { }

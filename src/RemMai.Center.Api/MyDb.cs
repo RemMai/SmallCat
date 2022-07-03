@@ -1,68 +1,48 @@
 ﻿using StackExchange.Profiling;
-using System.Reflection;
-using SmartCat.DataBase;
 using RemMai.Center.Api.Model;
+using SmartCat.FreeSqlExtensions;
 
 namespace RemMai.Center.Api;
 
 public static class MyDb
 {
-    public static IdleBus<IFreeSql> DataBases { get; set; } = new IdleBus<IFreeSql>(TimeSpan.FromMilliseconds(5));
+    public static IdleBus<IFreeSql> DleBus { get; set; } = new IdleBus<IFreeSql>(TimeSpan.FromMilliseconds(5));
 
-    public static bool InitBaseDb()
+    public static void InitDataBase()
     {
-        SmartCat.Cat.Configuration.;
-    }
+        FreeSqlContextHelper.Init();
 
+        var entityGroups = FreeSqlContextHelper.EntityGroups;
 
-    public static IFreeSql SetDataBase(string connectionString)
-    {
-
-
-
-
-
-        FreeSqlManager.LoadDataEntities();
-
-        var types = FreeSqlManager.GetDataEntities<IMaiDbLocker>().ToArray();
-
-        var Db = new FreeSql.FreeSqlBuilder()
-             .UseConnectionString(FreeSql.DataType.Sqlite, "Data Source=RemMai.db;Pooling=true;Min Pool Size=1")
-             .UseMonitorCommand(cmd => Console.Write(cmd.CommandText))
-             .Build();
-
-        Db.CodeFirst.IsAutoSyncStructure = true;
-        Db.CodeFirst.SyncStructure(types);
-        Db.Aop.CurdAfter += Aop_CurdAfter;
-
-        return Db;
-    }
-
-    private static void Aop_CurdAfter(object? sender, FreeSql.Aop.CurdAfterEventArgs e)
-    {
-        var realSQL = e.Sql;
-
-        e.DbParms.ToList().ForEach(p =>
+        List<FreeSqlDbConfiguration> dbConfigurations = new()
         {
-            realSQL = realSQL.Replace(p.ParameterName, $"'{p.Value}'");
+            new FreeSqlDbConfiguration() { Locker = typeof(IMaiDbLocker) , ConnectionString = "Data Source=RemMai.db;Pooling=true;Min Pool Size=1" , FreeSqlDataType = FreeSql.DataType.Sqlite }
+        };
+
+        dbConfigurations.ForEach(configuration =>
+        {
+            var item = entityGroups.FirstOrDefault(e => e.Locker == configuration.Locker);
+
+            if (item != null)
+            {
+                DleBus.Register(item.Locker.Name, () =>
+                {
+                    var Db = new FreeSql.FreeSqlBuilder()
+                     .UseConnectionString(configuration.FreeSqlDataType, configuration.ConnectionString)
+                     .UseMonitorCommand(cmd => Console.Write(cmd.CommandText))
+                     .Build();
+
+                    if (SmartCat.Cat.Environment.IsDevelopment())
+                    {
+                        Db.CodeFirst.IsAutoSyncStructure = true;
+                        Db.CodeFirst.SyncStructure(item.Entities.ToArray());
+                    }
+                    Db.Aop.CurdAfter += FreeSqlContextHelper.Aop_CurdAfter;
+
+                    return Db;
+                });
+            }
         });
-
-        MiniProfiler.Current.CustomTiming($"CurdAfter", realSQL, executeType: "Execute FreeSQL Query", true);
     }
-
-
-    public static bool RegisterDatabase(string key, string connectionString, bool isReRegister = false)
-    {
-        if (DataBases.Exists(key))
-        {
-            DataBases.TryRemove(key);
-            DataBases.Register(key, () => SetDataBase(connectionString));
-        }
-
-        return true;
-    }
-
-
-
 
 }
