@@ -1,15 +1,14 @@
-﻿
-<!-- HTML for static distribution bundle build -->
-<script async="async" 
-        id="mini-profiler" 
-        src="/profiler/includes.min.js?v=4.2.22+4563a9e1ab" 
-        data-version="4.2.22+4563a9e1ab" data-path="/profiler/" 
-        data-current-id="a6eb5c96-aaf3-4990-bbb8-5c8a236aeb49" 
-        data-ids="a6eb5c96-aaf3-4990-bbb8-5c8a236aeb49" 
-        data-position="Left" " data-scheme="Light" 
-        data-authorized="true" data-max-traces="15" 
-        data-toggle-shortcut="Alt+P" 
-        data-trivial-milliseconds="2.0" 
+﻿<!-- HTML for static distribution bundle build -->
+<script async="async"
+        id="mini-profiler"
+        src="/profiler/includes.min.js?v=4.2.22+4563a9e1ab"
+        data-version="4.2.22+4563a9e1ab" data-path="/profiler/"
+        data-current-id="a6eb5c96-aaf3-4990-bbb8-5c8a236aeb49"
+        data-ids="a6eb5c96-aaf3-4990-bbb8-5c8a236aeb49"
+        data-position="Left" data-scheme="Light"
+        data-authorized="true" data-max-traces="15"
+        data-toggle-shortcut="Alt+P"
+        data-trivial-milliseconds="2.0"
         data-ignored-duplicate-execute-types="Open,OpenAsync,Close,CloseAsync">
 </script>
 <!DOCTYPE html>
@@ -85,6 +84,10 @@
             return new Fn();
         }
 
+
+
+
+
         window.onload = function () {
             var configObject = JSON.parse('%(ConfigObject)');
             var oauthConfigObject = JSON.parse('%(OAuthConfigObject)');
@@ -110,16 +113,53 @@
 
             // Parse and add interceptor functions
             var interceptors = JSON.parse('%(Interceptors)');
-            if (interceptors.RequestInterceptorFunction)
+            if (interceptors.RequestInterceptorFunction) {
                 configObject.requestInterceptor = parseFunction(interceptors.RequestInterceptorFunction);
-            if (interceptors.ResponseInterceptorFunction)
-                configObject.responseInterceptor = parseFunction(interceptors.ResponseInterceptorFunction);
+            }
+
+            const setRequsetJwtToken = (response) => {
+                var jwtToken = response.headers['jwt_token'];
+                if (jwtToken) {
+                    jwtToken = "Bearer " + jwtToken;
+                    window.localStorage.setItem('jwt_token', jwtToken);
+                    ui.preauthorizeApiKey("Bearer", jwtToken);
+                } else {
+                    window.localStorage.removeItem('jwt_token');
+                    window.ui.authActions.logoutWithPersistOption(['Bearer']);
+                }
+                return response;
+            }
+
+            const responseHook = (response) => {
+                if (interceptors.ResponseInterceptorFunction) {
+                    parseFunction(interceptors.ResponseInterceptorFunction)(response);
+                }
+                setRequsetJwtToken(response);
+                return response;
+            }
+
+
+            configObject.responseInterceptor = responseHook;
+
+            configObject.onComplete = () => {
+                var jwtToken = window.localStorage.getItem('jwt_token');
+                if (jwtToken) {
+                    console.log(jwtToken);
+                    ui.preauthorizeApiKey("Bearer", jwtToken);
+                }
+            };
+
+
+
 
             // Begin Swagger UI call region
 
             const ui = SwaggerUIBundle(configObject);
 
             ui.initOAuth(oauthConfigObject);
+
+
+            
 
             // End Swagger UI call region
 

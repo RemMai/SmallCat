@@ -97,7 +97,7 @@ namespace SmartCat.DynamicWebApi
             {
                 if (!CheckNoMapMethod(action))
                 {
-                    var methodEnable = action.ActionMethod.SkipRestFulByMothodInfo();
+                    var methodEnable = action.ActionMethod.SkipRestFulByMethodInfo();
 
                     if (!RestFulContextHelper.SkipRestFul(methodEnable, typeEnable))
                     {

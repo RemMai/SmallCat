@@ -1,33 +1,31 @@
-﻿using SmartCat.Helpers;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using SmartCat.Model;
-using System.Threading.Tasks;
-using FreeSql;
 using StackExchange.Profiling;
 
-namespace SmartCat.FreeSqlExtensions;
+namespace SmartCat.FreeSqlIdleBus;
 
 public static class FreeSqlContextHelper
 {
-    public static List<FreeSqlEntityGroup> EntityGroups { get; internal set; }
+    public static List<FreeSqlEntityGroup> EntityGroups { get; internal set; } = new List<FreeSqlEntityGroup>();
     public static List<Type> DataEntities { get; internal set; }
-
+    // 所有的DbLocker
+    public static List<Type> DbLockers { get; internal set; } = new List<Type>();
 
     /// <summary>
     /// 初始化
     /// </summary>
-    public static void Init()
+    static FreeSqlContextHelper()
     {
-        EntityGroups = new List<FreeSqlEntityGroup>();
-
+        // 获取全部的数据实体
         FindAllDataEntities();
 
+        // 分类所有的数据实体到不懂的DbLock。
         VerbDataEntities();
+
+        DbLockers = Cat.ProjectAssemblies.SelectMany(e =>
+            e.GetTypes().Where(t
+                => t.IsInterface
+                && (t.IsAssignableFrom(typeof(IDbLocker)) || t == typeof(IDbLocker)))).ToList();
     }
     /// <summary>
     /// 查找全部的数据实体
@@ -44,10 +42,13 @@ public static class FreeSqlContextHelper
     {
         foreach (var type in DataEntities)
         {
-            var Genericinterfaces = type.GetInterfaces().Where(face => face.IsGenericType && face.GetInterfaces().Any(e => e == typeof(IDataEntity)) && face.GenericTypeArguments.Any(args => args.GetInterfaces().Any(t => t == typeof(IDbLocker)))).ToList();
-            if (Genericinterfaces.Any())
+            var genericInterfaces = type.GetInterfaces().Where(face => face.IsGenericType
+                                                                    && face.GetInterfaces().Any(e => e == typeof(IDataEntity))
+                                                                    && face.GenericTypeArguments.Any(args => args.GetInterfaces().Any(t => t == typeof(IDbLocker)))
+                                                                    ).ToList();
+            if (genericInterfaces.Any())
             {
-                var lockers = Genericinterfaces.SelectMany(e => e.GenericTypeArguments.Where(e => e == typeof(IDbLocker) || e.GetInterfaces().Any(t => t == typeof(IDbLocker)))).ToList();
+                var lockers = genericInterfaces.SelectMany(e => e.GenericTypeArguments.Where(type1 => type1 == typeof(IDbLocker) || type1.GetInterfaces().Any(t => t == typeof(IDbLocker)))).ToList();
                 foreach (var locker in lockers)
                 {
                     Add(locker, type);
@@ -55,7 +56,7 @@ public static class FreeSqlContextHelper
             }
             else
             {
-                bool isCommonEntity = type.GetInterfaces().Any(face => face == typeof(IDataEntity));
+                var isCommonEntity = type.GetInterfaces().Any(face => face == typeof(IDataEntity));
                 if (isCommonEntity)
                 {
                     Add(typeof(IDbLocker), type);
@@ -66,7 +67,7 @@ public static class FreeSqlContextHelper
 
     #region Other
     /// <summary>
-    /// 判断提示是否是<see cref="IDataEntity"/>的直接、间接实现类。
+    /// 判断数据对象实体是否是<see cref="IDataEntity"/>的直接、间接实现类。
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -80,39 +81,47 @@ public static class FreeSqlContextHelper
     /// <summary>
     /// 将DataEntity加入到Entities中
     /// </summary>
-    /// <param name="_locker"></param>
-    /// <param name="_type"></param>
-    private static void Add(Type _locker, Type _type)
+    /// <param name="locker"></param>
+    /// <param name="type"></param>
+    private static void Add(Type locker, Type type)
     {
-        var item = EntityGroups.FirstOrDefault(e => e.Locker == _locker);
+        var item = EntityGroups.FirstOrDefault(e => e.Locker == locker);
         if (item == null)
         {
-            item = new FreeSqlEntityGroup() { Locker = _locker, Entities = new List<Type>() };
-            item.Entities.Add(_type);
+            item = new FreeSqlEntityGroup() { Locker = locker, Entities = new List<Type> { type } };
             EntityGroups.Add(item);
         }
         else
         {
-            if (!item.Entities.Any(e => e == _type))
+            if (item.Entities.All(e => e != type))
             {
-                item.Entities.Add(_type);
+                item.Entities.Add(type);
             }
         }
     }
+
+
+
+
+
     #endregion
 
 
     #region FreeSql Handler
     public static void Aop_CurdAfter(object? sender, FreeSql.Aop.CurdAfterEventArgs e)
     {
-        var realSQL = e.Sql;
+        Console.WriteLine();
+
+        var realSql = e.Sql;
 
         e.DbParms.ToList().ForEach(p =>
         {
-            realSQL = realSQL.Replace(p.ParameterName, $"'{p.Value}'");
+            realSql = realSql.Replace(p.ParameterName, $"'{p.Value}'");
         });
 
-        MiniProfiler.Current.CustomTiming($"CurdAfter", realSQL, executeType: "Execute FreeSQL Query", true);
+        MiniProfiler.Current.CustomTiming($"CurdAfter", realSql, executeType: "Execute FreeSQL Query", true);
     }
     #endregion
 }
+
+

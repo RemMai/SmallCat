@@ -1,22 +1,17 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SmartCat.Extensions.AutoScanConfiguration
+namespace SmartCat.AutoScanConfiguration.Extensions
 {
     public static class AutoScanConfiguration
     {
-
         /// <summary>
         /// 扫描Json配置文件
         /// </summary>
         /// <param name="builder"></param>
+        /// <param name="filterJsonFileList"></param>
         /// <returns></returns>
-        public static WebApplicationBuilder AutoScanConfigurationFile(this WebApplicationBuilder builder, List<string>? filterJosnFileList = null)
+        public static WebApplicationBuilder AutoScanConfigurationFile(this WebApplicationBuilder builder, List<string>? filterJsonFileList = null)
         {
             var path = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -29,21 +24,16 @@ namespace SmartCat.Extensions.AutoScanConfiguration
 
             // 自定义 Configuration Files //
             // 需要过滤的Json文件
-            List<string> filterJsonName = filterJosnFileList ?? new List<string>()
+            var filterJsonName = filterJsonFileList ?? new List<string>()
             {
                 "appsettings.Development.json",
-                ".deps.json",
                 ".runtimeconfig.json",
             };
 
-            var data = Directory.GetFiles(path, "*.json");
-
-            data.ToList().ForEach(e => Console.WriteLine(e));
-
             Directory.GetFiles(path, "*.json")
-                .Where(fileName => filterJsonName.Any(t => fileName.EndsWith(t)))
+                .Where(fileName => filterJsonName.Any(fileName.EndsWith))
                 .ToList()
-                .ForEach(e=> Cat.ConfigurationManager.AddJsonFile(e, optional: true, reloadOnChange: true));
+                .ForEach(e => Cat.ConfigurationManager.AddJsonFile(e, optional: true, reloadOnChange: true));
 
             return builder;
         }

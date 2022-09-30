@@ -1,7 +1,7 @@
 ﻿namespace SmartCat.DynamicWebApi
 {
     /// <summary>
-    /// Specifies the dynamic webapi options for the assembly.
+    /// Specifies the dynamic WebApi options for the assembly.
     /// </summary>
     public class AssemblyDynamicWebApiOptions
     {

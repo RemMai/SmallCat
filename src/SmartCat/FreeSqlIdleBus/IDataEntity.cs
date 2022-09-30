@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartCat.FreeSqlExtensions;
+﻿namespace SmartCat.FreeSqlIdleBus;
 
 public interface IDataEntity { }
 public interface IDataEntity<T> : IDataEntity where T : IDbLocker { }

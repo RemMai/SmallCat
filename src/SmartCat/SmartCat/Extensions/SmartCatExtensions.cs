@@ -1,17 +1,14 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SmartCat.Extensions.AutoDi;
-using SmartCat.Extensions.AutoScanConfiguration;
-using SmartCat.Extensions.DynamicWebApi;
-using SmartCat.Extensions.MiniProfiler;
+using SmartCat.AutoDi.Extensions;
+using SmartCat.AutoScanConfiguration.Extensions;
+using SmartCat.DynamicWebApi.Extensions;
+using SmartCat.Extensions.SmartCatMiniProfiler;
 using SmartCat.Extensions.Swagger;
-using SmartCat.Model;
+using SmartCat.JwtAuthorization;
 using SmartCat.RestFul;
-
 
 namespace SmartCat;
 
@@ -25,8 +22,9 @@ public static class GlobalObjectInjectExtensions
     /// <returns></returns>
     public static WebApplicationBuilder InitSmartCat(this WebApplicationBuilder appBuilder, Action<SmartCatOptions>? smartCatOption = null)
     {
-        // 全局服务注入 
-        appBuilder.Services.AddAutoDi();
+
+        // 注册全局请求上下文
+        appBuilder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         // 注册Configuration
         Cat.ConfigurationManager = appBuilder.Configuration;
@@ -39,44 +37,28 @@ public static class GlobalObjectInjectExtensions
 
         // 注册服务提供器
         Cat.ServiceProvider = appBuilder.Services.BuildServiceProvider(false);
-
-        // 注册全局请求上下文
-        appBuilder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+        
         // 自动扫描Json配置文件
         appBuilder.AutoScanConfigurationFile();
 
-        appBuilder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => {
-                    Cat.ConfigurationManager.Bind("JwtSettings", options);
-                });
-
-        appBuilder.Services.AddAuthorization();
+        appBuilder.Services.AddAutoDi();
 
         return appBuilder;
     }
 
-    public static IServiceCollection InjectSmartCat(this IMvcBuilder mvcBuilder, Action<SmartCatOptions>? smartCatOption = null, Action<IServiceCollection>? serviceCollection = null)
+    public static IServiceCollection InjectSmartCat(this IMvcBuilder mvcBuilder)
     {
-        var options = new SmartCatOptions();
-        smartCatOption?.Invoke(options);
-        mvcBuilder.InjectSmartCat(options);
-        // 注册其他服务
-        serviceCollection?.Invoke(mvcBuilder.Services);
-        return mvcBuilder.Services;
-    }
-    private static IServiceCollection InjectSmartCat(this IMvcBuilder mvcBuilder, SmartCatOptions? options = null)
-    {
-        mvcBuilder.Services.AddDynamicWebApi(options.DynamicWebApiConfiguration);
-        mvcBuilder.Services.AddSmartCatSwagger(options.SwaggerGenOptions);
+        // 全局服务注入 
+        mvcBuilder.Services.AddDynamicWebApi();
+        mvcBuilder.Services.AddSmartCatSwagger();
         mvcBuilder.Services.AddSmartCatMiniProfiler();
         mvcBuilder.Services.AddEndpointsApiExplorer();
 
         mvcBuilder.Services.Configure<MvcOptions>(option =>
         {
-            option.Filters.Add<SimpleActionFilter>();
-            option.Filters.Add<SimpleAsyncActionFilter>();
-            option.Filters.Add<SimpleExceptionFilter>();
+            option.Filters.Add<SimpleActionFilter>(1);
+            option.Filters.Add<SimpleAsyncActionFilter>(2);
+            option.Filters.Add<SimpleExceptionFilter>(3);
         });
 
         mvcBuilder.AddJsonOptions(option =>
@@ -91,11 +73,11 @@ public static class GlobalObjectInjectExtensions
     public static IApplicationBuilder UseSmartCat(this IApplicationBuilder app)
     {
         app.UseRouting();
+        app.UseErrorHandling();
         app.UseAuthentication();
         app.UseAuthorization();
-        app.UseSmartCatSwaggerUI();
+        app.UseSmartCatSwaggerUi();
         app.UseSmartCatMiniProfiler();
-
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

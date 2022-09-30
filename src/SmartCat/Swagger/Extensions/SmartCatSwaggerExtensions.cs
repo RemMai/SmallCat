@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace SmartCat.Extensions.Swagger;
 /// <summary>
@@ -27,34 +28,25 @@ public static class SmartCatSwaggerExtensions
 
                 // TODO：不可省略，否则Swagger中文注释不显示。
                 DirectoryInfo directoryInfo = new(AppContext.BaseDirectory);
+
                 directoryInfo.GetFiles("*.xml").Select(e => e.FullName).ToList().ForEach(xmlFullName =>
                 {
                     // 添加控制器层注释，true表示显示控制器注释
                     options.IncludeXmlComments(xmlFullName, true);
                 });
+                ///true, JwtBearerDefaults.AuthenticationScheme
+                options.OperationFilter<AddResponseHeadersFilter>();
+                options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+                options.OperationFilter<SecurityRequirementsOperationFilter>(true, JwtBearerDefaults.AuthenticationScheme);
 
                 options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme.",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
+                    BearerFormat = "JWT",
                     Scheme = JwtBearerDefaults.AuthenticationScheme,
-                    Type = SecuritySchemeType.Http,
-                    BearerFormat = "JWT"
-                });
-
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = JwtBearerDefaults.AuthenticationScheme
-                            }
-                        },
-                        new List<string>()
-                    }
+                    Type = SecuritySchemeType.ApiKey
                 });
             };
         }
@@ -65,7 +57,7 @@ public static class SmartCatSwaggerExtensions
     }
 
 
-    public static IApplicationBuilder UseSmartCatSwaggerUI(this IApplicationBuilder app)
+    public static IApplicationBuilder UseSmartCatSwaggerUi(this IApplicationBuilder app)
     {
         app.UseSwaggerUI(options =>
         {

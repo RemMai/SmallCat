@@ -16,7 +16,7 @@ public static class SmartCatMiao
     /// 全局异常处理（Gugu，肚子饿了，能不出问题?）
     /// </summary>
     /// <returns></returns>
-    public static SmartCatException Gugu(string message, int? statusCode) => statusCode.HasValue ? new SmartCatException(message, statusCode.Value) : new SmartCatException(message);
+    public static SmartCatException Gugu(string message, int? statusCode = 500) => statusCode.HasValue ? new SmartCatException(message, statusCode.Value) : new SmartCatException(message);
 }
 
 public class SmartCatException : Exception

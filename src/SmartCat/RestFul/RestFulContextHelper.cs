@@ -17,26 +17,21 @@ public static class RestFulContextHelper
     /// <returns></returns>
     public static ActionExecutingContext DataValidation(this ActionExecutingContext context)
     {
-        if (!context.ModelState.IsValid)
-        {
-            List<string> errors = new List<string>();
+        if (context.ModelState.IsValid) return context;
+        var errors = new List<string>();
 
-            foreach (var item in context.ModelState.Values)
-            {
-                foreach (var error in item.Errors)
-                {
-                    errors.Add(error.ErrorMessage);
-                }
-            }
-            RestFulResult<object> result = new RestFulResult<object>()
-            {
-                Success = false,
-                StatusCode = StatusCodes.Status400BadRequest,
-                Message = "请求参数错误，详细信息请查看Error",
-                Error = errors
-            };
-            context.Result = new JsonResult(result);
+        foreach (var item in context.ModelState.Values)
+        {
+            errors.AddRange(item.Errors.Select(error => error.ErrorMessage));
         }
+        var result = new RestFulResult<object>()
+        {
+            Success = false,
+            StatusCode = StatusCodes.Status400BadRequest,
+            Message = "请求参数错误，详细信息请查看Error",
+            Error = errors
+        };
+        context.Result = new JsonResult(result);
 
         return context;
     }
@@ -50,7 +45,7 @@ public static class RestFulContextHelper
         var controller = (context.ActionDescriptor as ControllerActionDescriptor);
         var method = controller.MethodInfo;
         var type = controller.ControllerTypeInfo;
-        return SkipRestFul(method.SkipRestFulByMothodInfo(), type.SkipRestFulByTypeInfo());
+        return SkipRestFul(method.SkipRestFulByMethodInfo(), type.SkipRestFulByTypeInfo());
     }
 
     /// <summary>
@@ -89,16 +84,16 @@ public static class RestFulContextHelper
             }
 
             context.Result = new JsonResult(result);
-            context.HttpContext.Response.StatusCode = result.StatusCode;
+            context.HttpContext.Response.StatusCode = StatusCodes.Status200OK;
             context.ExceptionHandled = true;
         }
         return context;
     }
 
 
-    public static bool? SkipRestFulByMothodInfo(this MethodInfo methodInfo)
+    public static bool? SkipRestFulByMethodInfo(this MethodInfo methodInfo)
     {
-        NonRestFulAttribute attr = methodInfo.GetSingleAttributeOrNull<NonRestFulAttribute>();
+        var attr = methodInfo.GetSingleAttributeOrNull<NonRestFulAttribute>();
         if (attr == null)
         {
             return null;
@@ -110,7 +105,7 @@ public static class RestFulContextHelper
     }
     public static bool? SkipRestFulByTypeInfo(this TypeInfo type)
     {
-        NonRestFulAttribute attr = type.GetSingleAttributeOrNull<NonRestFulAttribute>();
+        var attr = type.GetSingleAttributeOrNull<NonRestFulAttribute>();
         if (attr == null)
         {
             return null;

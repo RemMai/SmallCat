@@ -1,28 +1,62 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
-namespace SmartCat.Extensions.Authorization;
+namespace SmartCat.JwtAuthorization.Extensions;
 
-[Obsolete]
-public static class JWTAuthorizationExtensions
+public static class JwtAuthorizationExtensions
 {
-    /// <summary>
-    /// 添加Jwt鉴权
-    /// </summary>
-    /// <param name="services">服务</param>
-    /// <param name="authenticationConfigure">授权配置</param>
-    /// <param name="jwtBearerConfigure">jwt配置</param>
-    /// <returns></returns>
-    [Obsolete]
-    public static IServiceCollection AddJwtAuthorization<AuthorizationHandler>(this IServiceCollection services, Action<AuthenticationOptions>? authenticationConfigure = null, Action<JwtBearerOptions>? jwtBearerConfigure = null) where AuthorizationHandler : class, IAuthorizationHandler
+    public static IServiceCollection AddJwt<TAuthorizationHandler>(this IServiceCollection services)
+        where TAuthorizationHandler : class, IAuthorizationHandler
     {
-        var configuration = services.BuildServiceProvider(false).GetService<IConfiguration>();
 
-        services.AddTransient<IAuthorizationHandler, AuthorizationHandler>();
+        // init 
 
+        var token = new SmartCat.Model.JwtSetting();
+        Cat.ConfigurationManager.Bind("JwtSettings", token);
+        if (token.IssuerSigningKey.Length < 64)
+        {
+            throw SmartCatMiao.Gugu("JwtSettings.IssuerSigningKey.length must >= 64", 500);
+        }
+        Cat.JwtSetting = token;
+        // Register
+
+        services.AddSingleton<IAuthorizationPolicyProvider, DefaultAuthorizationPolicyProvider>();
+
+        services.AddScoped<IAuthorizationHandler, TAuthorizationHandler>();
+
+        var authenticationBuilder = services.AddAuthentication(x =>
+        {
+            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        });
+
+        authenticationBuilder.AddJwtBearer(x =>
+        {
+            x.RequireHttpsMetadata = false;
+            x.SaveToken = true;
+            x.TokenValidationParameters = new TokenValidationParameters
+            {
+                // 是否验证发布者
+                // 发布者名称
+                ValidateIssuer = token.ValidateIssuer,
+                ValidIssuer = token.ValidIssuer,
+
+                ValidAudience = token.ValidAudience,
+                ValidateAudience = token.ValidateAudience,
+
+                ValidateIssuerSigningKey = token.ValidateIssuerSigningKey,
+                IssuerSigningKey = new SymmetricSecurityKey(token.IssuerSigningKeyByteArray),
+
+                ValidateLifetime = token.ValidateLifetime,
+                RequireExpirationTime = token.RequireExpirationTime,
+
+                ClockSkew = TimeSpan.FromTicks(token.ClockSkew),
+            };
+        });
+        services.AddAuthorization();
         return services;
     }
 

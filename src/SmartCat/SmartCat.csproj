@@ -41,13 +41,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.666-preview20220603" />
+		<PackageReference Include="FreeSql" Version="3.2.666-preview20220717" />
+		<PackageReference Include="IdleBus" Version="1.5.2" />
+		<PackageReference Include="Mapster" Version="7.4.0-pre03" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0-preview.4.22251.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="7.0.0-preview.4.22229.4" />
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0-preview.4.22229.4" />
 		<PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
 		<PackageReference Include="nulastudio.NetCoreBeauty" Version="1.2.9.3" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="RestFul\Action\Attributes\" />
 	</ItemGroup>
 
 

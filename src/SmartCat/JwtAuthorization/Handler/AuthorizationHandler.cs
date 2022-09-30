@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using SmartCat.Model;
 
-namespace SmartCat;
+namespace SmartCat.JwtAuthorization;
 
-[Obsolete]
-public abstract class AuthorizationHandler :  IAuthorizationHandler, IFilterMetadata
+public abstract class AuthorizationHandler : IAuthorizationHandler
 {
     /// <summary>
     /// 验证鉴权是否成功
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    [Obsolete]
     public virtual Task<bool> CheckAuthorization(AuthorizationHandlerContext context)
     {
         return Task.FromResult(true);
@@ -21,7 +22,6 @@ public abstract class AuthorizationHandler :  IAuthorizationHandler, IFilterMeta
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-
     public async Task HandleAsync(AuthorizationHandlerContext context)
     {
         var noAuthRequirements = context.PendingRequirements;
@@ -30,8 +30,13 @@ public abstract class AuthorizationHandler :  IAuthorizationHandler, IFilterMeta
 
         if (authorization)
         {
-            context.Succeed(noAuthRequirements.First());
+            context.Succeed(noAuthRequirements.FirstOrDefault());
         }
-        else context.Fail();
+        else
+        {
+            context.Fail();
+        }
+
+        return;
     }
 }

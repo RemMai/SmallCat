@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
 namespace SmartCat.Helpers
 {
@@ -13,7 +7,7 @@ namespace SmartCat.Helpers
         /// <summary>
         /// 从项目嵌入的资源中读取指定的资源文件。
         /// </summary>
-        /// <param name="filename">指定的资源文件名称</param>
+        /// <param name="resourceName">指定的资源文件名称</param>
         /// <returns>返回的资源文件流</returns>
         public static Stream GetResource(string resourceName)
         {
@@ -37,7 +31,7 @@ namespace SmartCat.Helpers
             return data;
         }
 
-        public static List<Stream> GetJsonResources()
+        public static List<Stream?> GetJsonResources()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             var resources = assembly.GetManifestResourceNames().ToList()
@@ -45,7 +39,6 @@ namespace SmartCat.Helpers
                 .Select(e => assembly.GetManifestResourceStream(e))
                 .Where(e => e != null)
                 .ToList();
-
             return resources;
         }
 

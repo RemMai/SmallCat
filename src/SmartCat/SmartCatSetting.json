@@ -1,9 +1,12 @@
 {
+  "RequireExpirationTime": true,
   "JwtSettings": {
-    "IssuerSigningKey": "RemMai",
+    "IssuerSigningKey": "3ADE328B6DEC75EB15F8BDF842C72C235863EEFBB6054FE272B9491088C4A60F",
     "ValidateIssuerSigningKey": true,
-    "RequireExpirationTime": true,
     "ClockSkew": 30,
-    "ValidateIssuer": true
+    "ValidateIssuer": true,
+    "ValidIssuer": "RemMai",
+    "ValidateAudience": true,
+    "ValidAudience": "RemMai"
   }
 }

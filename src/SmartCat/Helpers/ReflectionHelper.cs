@@ -49,11 +49,7 @@ internal static class ReflectionHelper
     public static TAttribute GetSingleAttributeOrDefault<TAttribute>(this MemberInfo memberInfo, TAttribute defaultValue = default(TAttribute), bool inherit = true) where TAttribute : Attribute
     {
         var attributeType = typeof(TAttribute);
-        if (memberInfo.IsDefined(typeof(TAttribute), inherit))
-        {
-            return memberInfo.GetCustomAttributes(attributeType, inherit).Cast<TAttribute>().First();
-        }
-        return defaultValue;
+        return memberInfo.IsDefined(typeof(TAttribute), inherit) ? memberInfo.GetCustomAttributes(attributeType, inherit).Cast<TAttribute>().First() : defaultValue;
     }
 
 

@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SmartCat.DynamicWebApi;
 using SmartCat.Helpers;
 
-namespace SmartCat.Extensions.DynamicWebApi;
+namespace SmartCat.DynamicWebApi.Extensions;
 
 /// <summary>
 /// Add Dynamic WebApi
@@ -17,7 +16,7 @@ public static class DynamicWebApiServiceExtensions
     /// Use Dynamic WebApi to Configure
     /// </summary>
     /// <param name="application"></param>
-    /// <param name="options"></param>
+    /// <param name="optionsAction"></param>
     /// <returns></returns>
     public static IApplicationBuilder UseDynamicWebApi(this IApplicationBuilder application, Action<IServiceProvider, DynamicWebApiOptions> optionsAction)
     {

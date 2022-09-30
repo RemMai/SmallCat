@@ -15,7 +15,7 @@ public class MiniProfilerTest : IMiniProfilerTest, IDynamicWebApi
     public async Task<string> CreateUser(User user)
     {
         user.Id = 0;
-        MyDb.SetDataBase("");
+        MyDb.SetDataBase("");   
         var GroupEntities = FreeSqlContextHelper.GetGroupEntities();
 
         foreach (var item in GroupEntities)
