@@ -21,8 +21,6 @@ public static class SmartCatMiao
 
 public class SmartCatException : Exception
 {
-    public SmartCatException() : base() { }
-
     /// <summary>
     /// 全局异常模型
     /// </summary>
@@ -31,12 +29,12 @@ public class SmartCatException : Exception
     {
         Message = message;
     }
-    public SmartCatException(string message, int statusCode) : base()
+    public SmartCatException(string message, int statusCode)
     {
         Message = message;
         StatusCode = statusCode;
     }
 
-    public int StatusCode { get; set; } = StatusCodes.Status500InternalServerError;
+    public int StatusCode { get; } = StatusCodes.Status500InternalServerError;
     public override string Message { get; }
 }

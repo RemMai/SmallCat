@@ -26,7 +26,7 @@ namespace SmartCat.DynamicWebApi
 
         static AppConsts()
         {
-            HttpVerbs = new Dictionary<string, string>()
+            HttpVerbs = new Dictionary<string, string>
             {
                 // POST
                 ["add"]    = "POST",

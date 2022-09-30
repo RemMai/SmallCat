@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 
 namespace SmartCat.Extensions.SmartCatMiniProfiler;
+
 /// <summary>
 /// 注册动态Api
 /// <para></para>

@@ -1,11 +1,13 @@
-﻿namespace SmartCat.RestFul;
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
-public class NonRestFulAttribute : Attribute
+﻿namespace SmartCat.UnifiedResponse.Attribute;
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class NonRestFulAttribute : System.Attribute
 {
     /// <summary>
     /// 该属性是否生效
     /// </summary>
     public bool Enable { get; set; }
+
     /// <summary>
     /// 不统一响应结果
     /// </summary>

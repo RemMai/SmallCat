@@ -7,8 +7,9 @@ using SmartCat.DynamicWebApi.Extensions;
 using SmartCat.Extensions.SmartCatMiniProfiler;
 using SmartCat.Extensions.Swagger;
 using SmartCat.JwtAuthorization;
-using SmartCat.RestFul;
 using SmartCat.ServiceAutoDiscover.Extensions;
+using SmartCat.UnifiedResponse.Exception;
+using SmartCat.UnifiedResponse.Filter;
 
 namespace SmartCat;
 
@@ -22,7 +23,6 @@ public static class GlobalObjectInjectExtensions
     /// <returns></returns>
     public static WebApplicationBuilder InitSmartCat(this WebApplicationBuilder appBuilder, Action<SmartCatOptions>? smartCatOption = null)
     {
-
         // 注册全局请求上下文
         appBuilder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -37,7 +37,7 @@ public static class GlobalObjectInjectExtensions
 
         // 注册服务提供器
         Cat.ServiceProvider = appBuilder.Services.BuildServiceProvider(false);
-        
+
         // 自动扫描Json配置文件
         appBuilder.AutoScanConfigurationFile();
 
@@ -56,15 +56,12 @@ public static class GlobalObjectInjectExtensions
 
         mvcBuilder.Services.Configure<MvcOptions>(option =>
         {
-            option.Filters.Add<SimpleActionFilter>(1);
-            option.Filters.Add<SimpleAsyncActionFilter>(2);
-            option.Filters.Add<SimpleExceptionFilter>(3);
+            option.Filters.Add<SmartCatActionFilter>(1);
+            option.Filters.Add<SmartCatAsyncActionFilter>(2);
+            option.Filters.Add<SmartCatExceptionFilter>(3);
         });
 
-        mvcBuilder.AddJsonOptions(option =>
-        {
-            option.JsonSerializerOptions.PropertyNamingPolicy = null;
-        });
+        mvcBuilder.AddJsonOptions(option => { option.JsonSerializerOptions.PropertyNamingPolicy = null; });
 
         return mvcBuilder.Services;
     }

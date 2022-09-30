@@ -11,10 +11,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 using SmartCat.DynamicWebApi;
 using SmartCat.Helpers;
-using SmartCat.RestFul;
-
-
 using SmartCat.Model;
+using SmartCat.UnifiedResponse;
 
 namespace SmartCat.DynamicWebApi
 {
@@ -92,14 +90,14 @@ namespace SmartCat.DynamicWebApi
 
         private void ConfigureResult(ControllerModel controller)
         {
-            var typeEnable = controller.ControllerType.SkipRestFulByTypeInfo();
+            var typeEnable = controller.ControllerType.SkipUnifiedResponseByTypeInfo();
             foreach (var action in controller.Actions)
             {
                 if (!CheckNoMapMethod(action))
                 {
-                    var methodEnable = action.ActionMethod.SkipRestFulByMethodInfo();
+                    var methodEnable = action.ActionMethod.SkipUnifiedResponseByMethodInfo();
 
-                    if (!RestFulContextHelper.SkipRestFul(methodEnable, typeEnable))
+                    if (!UnifiedResponseContextHelper.SkipUnifiedResponse(methodEnable, typeEnable))
                     {
                         var realAction = action.ActionMethod.GetRealType();
                         if (!realAction.HasImplementedRawGeneric(typeof(RestFulResult<>)))

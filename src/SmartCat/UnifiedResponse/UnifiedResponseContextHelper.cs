@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SmartCat.Helpers;
 using SmartCat.Model;
-using System.Reflection;
+using SmartCat.UnifiedResponse.Attribute;
 
-namespace SmartCat.RestFul;
+namespace SmartCat.UnifiedResponse;
 
-public static class RestFulContextHelper
+internal static class UnifiedResponseContextHelper
 {
     /// <summary>
     /// 参数检查并且序列化参数的错误信息。
@@ -24,6 +25,7 @@ public static class RestFulContextHelper
         {
             errors.AddRange(item.Errors.Select(error => error.ErrorMessage));
         }
+
         var result = new RestFulResult<object>()
         {
             Success = false,
@@ -35,39 +37,43 @@ public static class RestFulContextHelper
 
         return context;
     }
+
     /// <summary>
-    ///  判断跳过RestFul序列化响应
+    /// 判断跳过RestFul序列化响应
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static bool SkipRestFul(this ActionExecutedContext context)
+    public static bool SkipUnifiedResponse(this ActionExecutedContext context)
     {
-        var controller = (context.ActionDescriptor as ControllerActionDescriptor);
+        var controller = (ControllerActionDescriptor)context.ActionDescriptor;
         var method = controller.MethodInfo;
         var type = controller.ControllerTypeInfo;
-        return SkipRestFul(method.SkipRestFulByMethodInfo(), type.SkipRestFulByTypeInfo());
+        return SkipUnifiedResponse(method.SkipUnifiedResponseByMethodInfo(), type.SkipUnifiedResponseByTypeInfo());
     }
 
     /// <summary>
-    /// 跳过RestFul序列化响应
+    /// 跳过统一响应
     /// </summary>
     /// <param name="methodEnable"></param>
     /// <param name="typeEnable"></param>
     /// <returns></returns>
-    public static bool SkipRestFul(bool? methodEnable, bool? typeEnable)
+    public static bool SkipUnifiedResponse(bool? methodEnable, bool? typeEnable)
     {
         if (methodEnable.HasValue)
         {
             return methodEnable.Value;
         }
-        else
-        {
-            return typeEnable.HasValue && typeEnable.Value;
-        }
+
+        return typeEnable.HasValue && typeEnable.Value;
     }
 
 
-    public static ExceptionContext RestFulException(this ExceptionContext context)
+    /// <summary>
+    /// 异常处理
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static ExceptionContext UnifiedException(this ExceptionContext context)
     {
         if (context.Exception != null)
         {
@@ -87,32 +93,20 @@ public static class RestFulContextHelper
             context.HttpContext.Response.StatusCode = StatusCodes.Status200OK;
             context.ExceptionHandled = true;
         }
+
         return context;
     }
 
 
-    public static bool? SkipRestFulByMethodInfo(this MethodInfo methodInfo)
+    public static bool? SkipUnifiedResponseByMethodInfo(this MethodInfo methodInfo)
     {
         var attr = methodInfo.GetSingleAttributeOrNull<NonRestFulAttribute>();
-        if (attr == null)
-        {
-            return null;
-        }
-        else
-        {
-            return attr.Enable;
-        }
+        return attr.Enable;
     }
-    public static bool? SkipRestFulByTypeInfo(this TypeInfo type)
+
+    public static bool? SkipUnifiedResponseByTypeInfo(this TypeInfo type)
     {
         var attr = type.GetSingleAttributeOrNull<NonRestFulAttribute>();
-        if (attr == null)
-        {
-            return null;
-        }
-        else
-        {
-            return attr.Enable;
-        }
+        return attr.Enable;
     }
 }

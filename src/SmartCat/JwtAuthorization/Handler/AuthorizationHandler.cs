@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using SmartCat.Model;
 
-namespace SmartCat.JwtAuthorization;
+namespace SmartCat.JwtAuthorization.Handler;
 
 public abstract class AuthorizationHandler : IAuthorizationHandler
 {
@@ -17,6 +13,7 @@ public abstract class AuthorizationHandler : IAuthorizationHandler
     {
         return Task.FromResult(true);
     }
+
     /// <summary>
     /// 实现授权接口
     /// </summary>
@@ -36,7 +33,5 @@ public abstract class AuthorizationHandler : IAuthorizationHandler
         {
             context.Fail();
         }
-
-        return;
     }
 }

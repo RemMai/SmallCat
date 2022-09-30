@@ -14,11 +14,11 @@ public static class JwtAuthorizationExtensions
 
         // init 
 
-        var token = new SmartCat.Model.JwtSetting();
+        var token = new Model.JwtSetting();
         Cat.ConfigurationManager.Bind("JwtSettings", token);
         if (token.IssuerSigningKey.Length < 64)
         {
-            throw SmartCatMiao.Gugu("JwtSettings.IssuerSigningKey.length must >= 64", 500);
+            throw SmartCatMiao.Gugu("JwtSettings.IssuerSigningKey.length must >= 64");
         }
         Cat.JwtSetting = token;
         // Register

@@ -41,8 +41,5 @@ namespace SmartCat.Helpers
                 .ToList();
             return resources;
         }
-
-
-
     }
 }

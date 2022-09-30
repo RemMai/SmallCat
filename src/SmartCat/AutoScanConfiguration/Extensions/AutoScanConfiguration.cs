@@ -19,10 +19,10 @@ namespace SmartCat.AutoScanConfiguration.Extensions
             smartCatJsonConfiguration.ForEach(e =>
             {
                 Cat.ConfigurationManager.AddJsonStream(e);
-                var data = Cat.ConfigurationManager.GetSection("JwtSettings").Get<Model.JwtSetting>();
+                Cat.ConfigurationManager.GetSection("JwtSettings").Get<Model.JwtSetting>();
             });
 
-            // 自定义 Configuration Files //
+            // 自定义 Configuration Files
             // 需要过滤的Json文件
             var filterJsonName = filterJsonFileList ?? new List<string>()
             {
@@ -37,6 +37,5 @@ namespace SmartCat.AutoScanConfiguration.Extensions
 
             return builder;
         }
-
     }
 }

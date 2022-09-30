@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SmartCat.Model;
 
-namespace SmartCat.RestFul;
+namespace SmartCat.UnifiedResponse.Filter;
 
-public class SimpleActionFilter : IActionFilter
+public class SmartCatActionFilter : IActionFilter
 {
     public void OnActionExecuting(ActionExecutingContext context)
     {
         context.DataValidation();
     }
+
     public void OnActionExecuted(ActionExecutedContext context)
     {
         if (context.Canceled) return;
@@ -24,9 +25,15 @@ public class SimpleActionFilter : IActionFilter
         };
         if (data.Key)
         {
-            if (!context.SkipRestFul())
+            if (!context.SkipUnifiedResponse())
             {
-                context.Result = new JsonResult(new RestFulResult<object>() { StatusCode = StatusCodes.Status200OK, Message = null, Success = true, Data = data.Value });
+                context.Result = new JsonResult(new RestFulResult<object>
+                {
+                    Success = true,
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = null,
+                    Data = data.Value
+                });
             }
         }
 
