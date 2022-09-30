@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SmartCat.ServiceAutoDiscover.Attributes;
 
-namespace SmartCat.AutoDi.Extensions;
+namespace SmartCat.ServiceAutoDiscover.Extensions;
 
 public static class AutoDiExtensions
 {
@@ -11,12 +11,12 @@ public static class AutoDiExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AddAutoDi(this IServiceCollection services)
+    public static IServiceCollection AddServiceAutoDiscover(this IServiceCollection services)
     {
+        Console.WriteLine("[ServiceAutoDiscoverService] 启动中...");
         var allTypes = Cat.ProjectAssemblies
             .SelectMany(assembly => assembly.GetTypes().Where(type => type.IsClass && !type.IsSealed && !type.IsAbstract && type.IsPublic && type.IsDefined(typeof(ServiceAutoDiscoverAttribute), false)))
             .ToList();
-
         foreach (var type in allTypes)
         {
             var attribute = type.GetCustomAttribute<ServiceAutoDiscoverAttribute>()!;
@@ -33,10 +33,10 @@ public static class AutoDiExtensions
                     services.AddTransient(attribute.ImplementationInterface, type);
                     break;
                 default:
-                    throw new Exception($"{type.Name} ServiceAutoDiscover Error, Lift Value Error.");
+                    throw new Exception($"{type.Name} 自动注入失败，请检查代码");
             }
-            
-            
+
+            Console.WriteLine($"'{type.Name}'注入到DI成功");
         }
 
         return services;

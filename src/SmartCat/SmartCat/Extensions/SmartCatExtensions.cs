@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using SmartCat.AutoDi.Extensions;
 using SmartCat.AutoScanConfiguration.Extensions;
 using SmartCat.DynamicWebApi.Extensions;
 using SmartCat.Extensions.SmartCatMiniProfiler;
 using SmartCat.Extensions.Swagger;
 using SmartCat.JwtAuthorization;
 using SmartCat.RestFul;
+using SmartCat.ServiceAutoDiscover.Extensions;
 
 namespace SmartCat;
 
@@ -41,7 +41,7 @@ public static class GlobalObjectInjectExtensions
         // 自动扫描Json配置文件
         appBuilder.AutoScanConfigurationFile();
 
-        appBuilder.Services.AddAutoDi();
+        appBuilder.Services.AddServiceAutoDiscover();
 
         return appBuilder;
     }
