@@ -33,7 +33,7 @@ public static class FreeSqlExtensions
                     .Build();
 
 
-                if (SmartCat.Cat.Environment.IsDevelopment() || freeSqlDbConfiguration.AutoSyncStructure)
+                if (Cat.Environment.IsDevelopment() || freeSqlDbConfiguration.AutoSyncStructure)
                 {
                     db.CodeFirst.IsAutoSyncStructure = true;
                     db.CodeFirst.SyncStructure(item.Entities.ToArray());
@@ -75,7 +75,7 @@ public static class FreeSqlExtensions
                     .Build();
 
 
-                if (SmartCat.Cat.Environment.IsDevelopment() || freeSqlDbConfiguration.AutoSyncStructure)
+                if (Cat.Environment.IsDevelopment() || freeSqlDbConfiguration.AutoSyncStructure)
                 {
                     db.CodeFirst.IsAutoSyncStructure = true;
                     db.CodeFirst.SyncStructure(item.Entities.ToArray());

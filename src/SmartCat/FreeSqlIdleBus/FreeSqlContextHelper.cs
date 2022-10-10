@@ -6,10 +6,10 @@ namespace SmartCat.FreeSqlIdleBus;
 
 public static class FreeSqlContextHelper
 {
-    public static List<FreeSqlEntityGroup> EntityGroups { get; internal set; } = new List<FreeSqlEntityGroup>();
+    public static List<FreeSqlEntityGroup> EntityGroups { get; } = new();
     public static List<Type> DataEntities { get; internal set; }
     // 所有的DbLocker
-    public static List<Type> DbLockers { get; internal set; } = new List<Type>();
+    public static List<Type> DbLockers { get; }
 
     /// <summary>
     /// 初始化

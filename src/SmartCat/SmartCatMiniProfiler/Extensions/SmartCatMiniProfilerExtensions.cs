@@ -1,12 +1,7 @@
-﻿using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore;
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace SmartCat.Extensions.SmartCatMiniProfiler;
 
@@ -24,6 +19,7 @@ public static class SmartCatMiniProfilerExtensions
         var configuration = services.BuildServiceProvider(false).GetService<IConfiguration>();
 
         var isEnable = configuration.GetSection("MiniProfiler").Value;
+
         if (isEnable == null || configuration.GetValue<bool>("MiniProfiler"))
         {
             services.AddMiniProfiler(options =>
@@ -31,6 +27,7 @@ public static class SmartCatMiniProfilerExtensions
                 options.RouteBasePath = "/profiler";
                 options.EnableMvcFilterProfiling = false;
                 options.EnableMvcViewProfiling = false;
+                options.EnableDebugMode = Cat.Environment.IsDevelopment();
             });
         }
 
@@ -40,8 +37,9 @@ public static class SmartCatMiniProfilerExtensions
     public static IApplicationBuilder UseSmartCatMiniProfiler(this IApplicationBuilder app)
     {
         var configuration = app.ApplicationServices.GetService<IConfiguration>();
-
+        
         var isEnable = configuration.GetSection("MiniProfiler").Value;
+        
         if (isEnable == null || configuration.GetValue<bool>("MiniProfiler")) app.UseMiniProfiler();
 
         return app;

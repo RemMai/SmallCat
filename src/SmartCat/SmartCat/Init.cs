@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyModel;
+﻿using Microsoft.Extensions.DependencyModel;
 using System.Reflection;
 
 namespace SmartCat;

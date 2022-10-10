@@ -7,7 +7,6 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using AppDomain = System.AppDomain;
 
 namespace SmartCat.Extensions.Swagger;
 

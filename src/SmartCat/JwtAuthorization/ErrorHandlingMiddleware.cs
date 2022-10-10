@@ -23,11 +23,12 @@ public class ErrorHandlingMiddleware
             var msg = statusCode switch
             {
                 200 => string.Empty,
-                401 => "请登录",
-                404 => "未找到服务",
-                500 => "服务内部错误",
-                502 => "请求错误",
-                _ => "其他错误"
+                302 => "页面跳转中...",
+                401 => "未授权访问",
+                404 => "未找到该服务",
+                500 => "程序内部错误",
+                502 => "请求方式错误",
+                _ => "其他未知错误，请联系管理员",
             };
             if (!string.IsNullOrWhiteSpace(msg))
             {
@@ -40,12 +41,15 @@ public class ErrorHandlingMiddleware
             await HandleExceptionAsync(context, statusCode, ex.Message);
         }
     }
+
     //异常错误信息捕获，将错误信息用Json方式返回
     private static Task HandleExceptionAsync(HttpContext context, int statusCode, string msg)
     {
-        if (context.Response.HasStarted) return Task.CompletedTask;
-        context.Response.StatusCode = 200;
-        context.Response.WriteAsJsonAsync(new RestFulResult<string>() { StatusCode = statusCode, Error = msg });
+        if (!context.Response.HasStarted)
+        {
+            context.Response.StatusCode = statusCode;
+            context.Response.WriteAsJsonAsync(new RestFulResult<string> { StatusCode = statusCode, Error = msg });
+        }
         return Task.CompletedTask;
     }
 }

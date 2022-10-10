@@ -101,12 +101,12 @@ internal static class UnifiedResponseContextHelper
     public static bool? SkipUnifiedResponseByMethodInfo(this MethodInfo methodInfo)
     {
         var attr = methodInfo.GetSingleAttributeOrNull<NonRestFulAttribute>();
-        return attr.Enable;
+        return attr?.Enable;
     }
 
     public static bool? SkipUnifiedResponseByTypeInfo(this TypeInfo type)
     {
         var attr = type.GetSingleAttributeOrNull<NonRestFulAttribute>();
-        return attr.Enable;
+        return attr?.Enable;
     }
 }

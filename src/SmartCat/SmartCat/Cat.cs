@@ -17,13 +17,14 @@ public static class Cat
         ProjectAssemblies = Init.GetProjectAssemblies();
         Db = new IdleBus<IFreeSql>(TimeSpan.FromMinutes(5));
     }
+
     public static IWebHostEnvironment? Environment { get; internal set; }
     public static ConfigurationManager? ConfigurationManager { get; internal set; }
-    public static IConfiguration? Configuration { get => ConfigurationManager; }
+    public static IConfiguration? Configuration => ConfigurationManager;
     public static string ExecuteDirectory { get; } = AppContext.BaseDirectory;
     public static List<Assembly> ProjectAssemblies { get; }
     public static IServiceCollection? Services { get; internal set; }
-    public static HttpContext? HttpContext => GetService<IHttpContextAccessor>()!.HttpContext;
+    public static HttpContext? HttpContext => GetService<IHttpContextAccessor>().HttpContext;
     public static ServiceProvider? ServiceProvider { get; internal set; }
     public static IdleBus<IFreeSql> Db { get; }
     public static JwtSetting JwtSetting { get; internal set; }
@@ -34,7 +35,7 @@ public static class Cat
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static T GetService<T>() => ServiceProvider!.GetService<T>() ?? throw new Exception($"Not Find {typeof(T).Name} Service!");
+    public static T GetService<T>() => ServiceProvider!.GetService<T>() ?? throw new Exception($"Not Find \"{typeof(T).Name}\" Service!");
 
 
     /// <summary>
