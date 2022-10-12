@@ -16,12 +16,12 @@ namespace SmallCat;
 public static class GlobalObjectInjectExtensions
 {
     /// <summary>
-    /// 注入SmartCat Cat 全局静态变量
+    /// 注入 Small Cat 全局静态变量
     /// </summary>
     /// <param name="appBuilder"></param>
     /// <param name="smartCatOption"></param>
     /// <returns></returns>
-    public static WebApplicationBuilder InitSmallCat(this WebApplicationBuilder appBuilder, Action<SmartCatOptions>? smartCatOption = null)
+    public static WebApplicationBuilder InitSmallCat(this WebApplicationBuilder appBuilder, Action<SmallCatOptions>? smartCatOption = null)
     {
         // 注册全局请求上下文
         appBuilder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

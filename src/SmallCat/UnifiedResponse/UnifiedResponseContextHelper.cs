@@ -84,7 +84,7 @@ internal static class UnifiedResponseContextHelper
                 Message = context.Exception.Message,
             };
 
-            if (context.Exception is SmartCatException exception)
+            if (context.Exception is SmallCatException exception)
             {
                 result.StatusCode = exception.StatusCode;
             }
@@ -100,13 +100,13 @@ internal static class UnifiedResponseContextHelper
 
     public static bool? SkipUnifiedResponseByMethodInfo(this MethodInfo methodInfo)
     {
-        var attr = methodInfo.GetSingleAttributeOrNull<NonRestFulAttribute>();
+        var attr = methodInfo.GetSingleAttributeOrNull<NonUnifiedAttribute>();
         return attr?.Enable;
     }
 
     public static bool? SkipUnifiedResponseByTypeInfo(this TypeInfo type)
     {
-        var attr = type.GetSingleAttributeOrNull<NonRestFulAttribute>();
+        var attr = type.GetSingleAttributeOrNull<NonUnifiedAttribute>();
         return attr?.Enable;
     }
 }

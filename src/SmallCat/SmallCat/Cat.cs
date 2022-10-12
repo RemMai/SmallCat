@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmallCat.Model;
-using SmartCat;
+using SmallCat;
 
 namespace SmallCat;
 
@@ -48,6 +48,6 @@ public static class Cat
     {
         var db = Db.Get(name);
 
-        return db ?? throw SmartCatMiao.Gugu($"Not found Db '{name}'!", 500);
+        return db ?? throw SmallCatMiao.Gugu($"Not found Db '{name}'!", 500);
     }
 }

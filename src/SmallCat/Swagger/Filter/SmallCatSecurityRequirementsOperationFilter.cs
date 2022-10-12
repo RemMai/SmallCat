@@ -5,11 +5,11 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SmallCat.Swagger.Filter;
 
-internal class SmartCatSecurityRequirementsOperationFilter : IOperationFilter
+internal class SmallCatSecurityRequirementsOperationFilter : IOperationFilter
 {
     private readonly SecurityRequirementsOperationFilter<AuthorizeAttribute> _filter;
 
-    public SmartCatSecurityRequirementsOperationFilter(bool includeUnauthorizedAndForbiddenResponses = true, string securitySchemaName = "oauth2")
+    public SmallCatSecurityRequirementsOperationFilter(bool includeUnauthorizedAndForbiddenResponses = true, string securitySchemaName = "oauth2")
     {
         IEnumerable<string> PolicySelector(IEnumerable<AuthorizeAttribute> authAttributes) => from a in authAttributes where !string.IsNullOrEmpty(a.Policy) select a.Policy;
         _filter = new SecurityRequirementsOperationFilter<AuthorizeAttribute>(PolicySelector, includeUnauthorizedAndForbiddenResponses, securitySchemaName);

@@ -4,7 +4,7 @@ using SmallCat.ServiceAutoDiscover.Attributes;
 
 namespace SmallCat.ServiceAutoDiscover.Extensions;
 
-public static class AutoDiExtensions
+public static class ServiceAutoDiscoverExtensions
 {
     /// <summary>
     /// 自动注册标识的服务

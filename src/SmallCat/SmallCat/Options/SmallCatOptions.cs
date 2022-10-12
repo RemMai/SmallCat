@@ -3,7 +3,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SmallCat
 {
-    public class SmartCatOptions
+    public class SmallCatOptions
     {
         public Action<DynamicWebApiOptions>? DynamicWebApiConfiguration { get; set; } = null;
         public Action<SwaggerGenOptions>? SwaggerGenOptions { get; set; } = null;
