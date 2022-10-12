@@ -4,9 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SmallCat.Model;
-using SmallCat;
 
-namespace SmartCat.JwtAuthorization.Extensions;
+namespace SmallCat.JwtAuthorization.Extensions;
 
 public static class JwtAuthorizationExtensions
 {
