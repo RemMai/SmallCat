@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 namespace SmallCat.FreeSqlIdleBus.Extensions;
 
 /// <summary>
-/// Add Dynamic WebApi
+/// FreeSql 拓展
 /// </summary>
 public static class FreeSqlExtensions
 {
