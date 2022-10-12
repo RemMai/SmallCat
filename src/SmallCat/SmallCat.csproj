@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>preview</LangVersion>
+		<AssemblyName>SmallCat</AssemblyName>
+		<RootNamespace>SmallCat</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<NoWarn>1701;1702;8600;8602;8603;8604;8625;8618;8714;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <NoWarn>1701;1702;8600;8602;8603;8604;8625;8618;8714;</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="SmartCatSetting.json" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Swagger\UI\favicon-16x16.png" />
+		<EmbeddedResource Include="Swagger\UI\favicon-32x32.png" />
+		<EmbeddedResource Include="Swagger\UI\index.css" />
+		<EmbeddedResource Include="Swagger\UI\index.html" />
+		<EmbeddedResource Include="Swagger\UI\oauth2-redirect.html" />
+		<EmbeddedResource Include="Swagger\UI\swagger-initializer.js" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui-bundle.js" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui-bundle.js.map" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui-es-bundle-core.js" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui-es-bundle-core.js.map" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui-es-bundle.js" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui-es-bundle.js.map" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui-standalone-preset.js" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui-standalone-preset.js.map" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui.css" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui.css.map" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui.js" />
+		<EmbeddedResource Include="Swagger\UI\swagger-ui.js.map" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FreeSql" Version="3.2.666-preview20220717" />
+		<PackageReference Include="IdleBus" Version="1.5.2" />
+		<PackageReference Include="Mapster" Version="7.4.0-pre03" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0-preview.4.22251.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="7.0.0-preview.4.22229.4" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0-preview.4.22229.4" />
+		<PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
+		<PackageReference Include="nulastudio.NetCoreBeauty" Version="1.2.9.3" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="UnifiedResponse\Filter\Attributes\" />
+	</ItemGroup>
+
+
+</Project>
