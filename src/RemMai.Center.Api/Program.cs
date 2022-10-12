@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using RemMai.Center.Api;
-using SmartCat;
-var builder = WebApplication.CreateBuilder(args).InitSmartCat();
-builder.Services.AddControllers().InjectSmartCat();
+using SmallCat;
+
+var builder = WebApplication.CreateBuilder(args).InitSmallCat();
+builder.Services.AddControllers().InjectSmallCat();
 var app = builder.Build();
-app.UseSmartCat();
+app.UseSmallCat();
 app.Run();

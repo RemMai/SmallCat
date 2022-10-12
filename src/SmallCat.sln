@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemMai.Center.Api", "RemMai.Center.Api\RemMai.Center.Api.csproj", "{D32FD353-4F1D-427C-BAB0-9924372BA3DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartCat", "SmartCat\SmartCat.csproj", "{ADE3D69E-21CA-4DA4-8F69-464B3741F073}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmallCat", "SmallCat\SmallCat.csproj", "{BD38A54B-43EB-44B5-A85C-ED09DF229AC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{D32FD353-4F1D-427C-BAB0-9924372BA3DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D32FD353-4F1D-427C-BAB0-9924372BA3DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D32FD353-4F1D-427C-BAB0-9924372BA3DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ADE3D69E-21CA-4DA4-8F69-464B3741F073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADE3D69E-21CA-4DA4-8F69-464B3741F073}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ADE3D69E-21CA-4DA4-8F69-464B3741F073}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ADE3D69E-21CA-4DA4-8F69-464B3741F073}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD38A54B-43EB-44B5-A85C-ED09DF229AC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD38A54B-43EB-44B5-A85C-ED09DF229AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD38A54B-43EB-44B5-A85C-ED09DF229AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD38A54B-43EB-44B5-A85C-ED09DF229AC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
