@@ -15,8 +15,8 @@ namespace SmallCat.AutoScanConfiguration.Extensions
         {
             var path = AppDomain.CurrentDomain.BaseDirectory;
 
-            var smartCatJsonConfiguration = Helpers.ResourceHelper.GetJsonResources();
-            smartCatJsonConfiguration.ForEach(e =>
+            var smallCatJsonConfiguration = Helpers.ResourceHelper.GetJsonResources();
+            smallCatJsonConfiguration.ForEach(e =>
             {
                 Cat.ConfigurationManager.AddJsonStream(e);
                 Cat.ConfigurationManager.GetSection("JwtSettings").Get<Model.JwtSetting>();

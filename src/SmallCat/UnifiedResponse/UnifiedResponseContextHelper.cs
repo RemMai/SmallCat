@@ -48,8 +48,10 @@ internal static class UnifiedResponseContextHelper
         var controller = (ControllerActionDescriptor)context.ActionDescriptor;
         var method = controller.MethodInfo;
         var type = controller.ControllerTypeInfo;
-        return SkipUnifiedResponse(method.SkipUnifiedResponseByMethodInfo(), type.SkipUnifiedResponseByTypeInfo());
+        var isUnifiedResult = method.ReturnType.HasImplementedRawGeneric(typeof(UnifiedResult<>));
+        return SkipUnifiedResponse(method.SkipUnifiedResponseByMethodInfo(), type.SkipUnifiedResponseByTypeInfo()) || isUnifiedResult;
     }
+
 
     /// <summary>
     /// 跳过统一响应

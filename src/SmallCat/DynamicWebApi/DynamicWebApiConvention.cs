@@ -71,7 +71,6 @@ namespace SmallCat.DynamicWebApi
                     controller.RouteValues["area"] = AppConsts.DefaultAreaName;
                 }
             }
-
         }
 
         private void ConfigureDynamicWebApi(ControllerModel controller, DynamicWebApiAttribute controllerAttr)
@@ -82,32 +81,32 @@ namespace SmallCat.DynamicWebApi
             ConfigureResult(controller);
         }
 
+        /// <summary>
+        /// 配置响应结果，Swagger文档的
+        /// </summary>
+        /// <param name="controller"></param>
         private void ConfigureResult(ControllerModel controller)
         {
             var typeEnable = controller.ControllerType.SkipUnifiedResponseByTypeInfo();
             foreach (var action in controller.Actions)
             {
-                if (!CheckNoMapMethod(action))
-                {
-                    var methodEnable = action.ActionMethod.SkipUnifiedResponseByMethodInfo();
+                // 接口是否不需要路由
+                if (CheckNoMapMethod(action)) continue;
+                var methodEnable = action.ActionMethod.SkipUnifiedResponseByMethodInfo();
 
-                    if (!UnifiedResponseContextHelper.SkipUnifiedResponse(methodEnable, typeEnable))
-                    {
-                        var realAction = action.ActionMethod.GetRealType();
-                        if (!realAction.HasImplementedRawGeneric(typeof(UnifiedResult<>)))
-                        {
-                            var restFulResultType = typeof(UnifiedResult<>).MakeGenericType(realAction);
-                            action.Filters.Add(new ProducesResponseTypeAttribute(restFulResultType, StatusCodes.Status200OK));
-                        }
+                // 接口是否跳过序列化处理
+                if (UnifiedResponseContextHelper.SkipUnifiedResponse(methodEnable, typeEnable)) continue;
+                var realAction = action.ActionMethod.GetRealType();
 
-                    }
-                }
+                // 接口是否已经是序列化响应
+                if (realAction.HasImplementedRawGeneric(typeof(UnifiedResult<>))) continue;
+                var restFulResultType = typeof(UnifiedResult<>).MakeGenericType(realAction);
+                action.Filters.Add(new ProducesResponseTypeAttribute(restFulResultType, StatusCodes.Status200OK));
             }
         }
 
         private void ConfigureParameters(ControllerModel controller)
         {
-
             foreach (var action in controller.Actions)
             {
                 if (!CheckNoMapMethod(action))
@@ -195,6 +194,7 @@ namespace SmallCat.DynamicWebApi
         }
 
         #endregion
+
         /// <summary>
         /// //不映射指定的方法
         /// </summary>
@@ -207,15 +207,15 @@ namespace SmallCat.DynamicWebApi
 
             if (noMapMethod != null)
             {
-                action.ApiExplorer.IsVisible = false;//对应的Api不映射
+                action.ApiExplorer.IsVisible = false; //对应的Api不映射
                 isExist = true;
             }
 
             return isExist;
         }
+
         private void ConfigureSelector(ControllerModel controller, DynamicWebApiAttribute controllerAttr)
         {
-
             if (controller.Selectors.Any(selector => selector.AttributeRouteModel != null))
             {
                 return;
@@ -237,7 +237,6 @@ namespace SmallCat.DynamicWebApi
 
         private void ConfigureSelector(string areaName, string controllerName, ActionModel action)
         {
-
             var nonAttr = ReflectionHelper.GetSingleAttributeOrDefault<NonDynamicWebApiAttribute>(action.ActionMethod);
 
             if (nonAttr != null)
@@ -258,7 +257,6 @@ namespace SmallCat.DynamicWebApi
 
         private void AddAppServiceSelector(string areaName, string controllerName, ActionModel action)
         {
-
             var verb = GetHttpVerb(action);
 
             action.ActionName = GetRestFulActionName(action.ActionName);
@@ -291,10 +289,7 @@ namespace SmallCat.DynamicWebApi
                         throw new Exception($"Unsupported http verb: {verb}.");
                 }
             }
-
-
         }
-
 
 
         /// <summary>
@@ -340,9 +335,7 @@ namespace SmallCat.DynamicWebApi
             action.ActionName = GetRestFulActionName(action.ActionName);
             foreach (var selector in action.Selectors)
             {
-                selector.AttributeRouteModel = selector.AttributeRouteModel == null ?
-                     CreateActionRouteModel(areaName, controllerName, action) :
-                     AttributeRouteModel.CombineAttributeRouteModel(CreateActionRouteModel(areaName, controllerName, action), selector.AttributeRouteModel);
+                selector.AttributeRouteModel = selector.AttributeRouteModel == null ? CreateActionRouteModel(areaName, controllerName, action) : AttributeRouteModel.CombineAttributeRouteModel(CreateActionRouteModel(areaName, controllerName, action), selector.AttributeRouteModel);
             }
         }
 

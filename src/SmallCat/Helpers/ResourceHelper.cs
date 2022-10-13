@@ -11,20 +11,20 @@ namespace SmallCat.Helpers
         /// <returns>返回的资源文件流</returns>
         public static Stream GetResource(string resourceName)
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            string nameSpace = assembly.GetName().Name;
+            var assembly = Assembly.GetExecutingAssembly();
+            var nameSpace = assembly.GetName().Name;
             if (!resourceName.StartsWith($"{nameSpace}."))
             {
                 resourceName = $"{nameSpace}.{resourceName}";
             }
-            Stream resource = assembly.GetManifestResourceStream(resourceName);
+            var resource = assembly.GetManifestResourceStream(resourceName);
             return resource;
         }
 
         public static string StreamReader(Stream resource)
         {
             string data = null;
-            using (StreamReader sr = new StreamReader(resource))
+            using (var sr = new StreamReader(resource))
             {
                 data = sr.ReadToEnd();
             }
@@ -33,7 +33,7 @@ namespace SmallCat.Helpers
 
         public static List<Stream?> GetJsonResources()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetExecutingAssembly();
             var resources = assembly.GetManifestResourceNames().ToList()
                 .Where(e => e.ToLower().EndsWith(".json"))
                 .Select(e => assembly.GetManifestResourceStream(e))

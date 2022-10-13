@@ -42,6 +42,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="SmallCatSetting.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="FreeSql" Version="3.2.666-preview20220717" />
 		<PackageReference Include="IdleBus" Version="1.5.2" />
 		<PackageReference Include="Mapster" Version="7.4.0-pre03" />
@@ -53,6 +57,7 @@
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.3" />
 	</ItemGroup>
+
 
 
 </Project>
